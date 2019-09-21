@@ -1,36 +1,9 @@
 <?php
 
-namespace Canvass\Action;
+namespace Canvass\Action\Validation;
 
-final class ValidateFormData
+final class ValidateFormData extends AbstractValidateDataAction
 {
-    /** @var \Canvass\Contract\Validate */
-    private $validator;
-    /** @var \Canvass\Contract\ValidationMap|null */
-    private $validationConverter;
-
-    /**
-     * ValidateFormData constructor.
-     * @param \Canvass\Contract\Validate $validator
-     * @param \Canvass\Contract\ValidationMap|null $validationConverter
-     */
-    public function __construct($validator, $validationConverter = null)
-    {
-        $this->validator = $validator;
-        $this->validationConverter = $validationConverter;
-    }
-
-    public function validate($data): bool
-    {
-        $rules = $this->getValidationRules();
-
-        if (null !== $this->validationConverter) {
-            $rules = $this->validationConverter->convertRulesToFormat($rules);
-        }
-
-        return $this->validator->validate($data, $rules);
-    }
-
     public function getValidationRules(): array
     {
         return [

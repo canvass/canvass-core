@@ -1,6 +1,6 @@
 <?php
 
-namespace Canvass\Action;
+namespace Canvass\Action\Validation;
 
 final class ValidateUserSubmission
 {

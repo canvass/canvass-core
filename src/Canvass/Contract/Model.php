@@ -20,6 +20,13 @@ interface Model
     public function getId();
 
     /**
+     * Get a given attribute on the model.
+     *
+     * @param  string  $key
+     * @return mixed */
+    public function getAttribute($key);
+
+    /**
      * Set a given attribute on the model.
      *
      * @param  string  $key
