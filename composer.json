@@ -24,7 +24,7 @@
     },
     "autoload": {
         "files": [
-            "helpers/helpers.php"
+            "src/helpers.php"
         ],
         "psr-4": {
             "Canvass\\": "src/Canvass"
