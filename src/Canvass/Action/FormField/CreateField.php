@@ -2,14 +2,13 @@
 
 namespace Canvass\Action\FormField;
 
-use Canvass\Action\Validation\AbstractValidateDataAction;
 use Canvass\Action\Validation\FormField\AbstractValidateFieldAction;
 use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
 
-class CreateField extends AbstractFieldAction
+final class CreateField extends AbstractFieldAction
 {
     /** @var \Canvass\Contract\Validate */
     private $validator;
@@ -39,25 +38,31 @@ class CreateField extends AbstractFieldAction
         }
 
         foreach (array_keys($validate::getValidationKeysWithRequiredValue()) as $key) {
-            $this->field->setAttribute($key, $data[$key] ?? '');
+            if (isset($data[$key])) {
+                $this->field->setAttribute($key, $data[$key]);
+            }
         }
 
         $this->field->setAttribute('form_id', $this->form->getId());
 
         $this->field->setAttribute('sort', $sort + 1);
 
-        $this->preSave($type, $data, $sort);
+        $this->preSave($type);
 
         return $this->field->save();
     }
 
-    private function preSave(string $type, $data, int $sort)
+    private function preSave(string $type): void
     {
         if ('divider' === $type) {
             $this->field->setAttribute(
                 'name',
                 $this->field->getAttribute('identifier')
             );
+        }
+
+        if (empty($this->field->getAttribute('type'))) {
+            $this->field->setAttribute('type', $type);
         }
     }
 
