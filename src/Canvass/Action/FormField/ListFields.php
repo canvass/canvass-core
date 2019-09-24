@@ -8,9 +8,7 @@ final class ListFields extends AbstractFieldAction
     {
         return [
             'form' => $this->form,
-            'fields' => $this->field->findAllByFormId(
-                $this->form->getId(), $version, $this->owner_id
-            )
+            'fields' => $this->field->findAllByFormId($this->form->getId(), 0)
         ];
     }
 }
