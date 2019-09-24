@@ -5,5 +5,5 @@ namespace Canvass\Contract;
 
 interface View
 {
-    public function render($data = null);
+    public function render($data = [], string $file = null): string;
 }
