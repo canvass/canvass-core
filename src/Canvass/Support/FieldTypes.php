@@ -22,4 +22,20 @@ class FieldTypes
 
         return $values;
     }
+
+    /**
+     * @param string $type
+     * @return string
+     * @throws \Canvass\Exception\InvalidValidationData
+     */
+    public static function getCanvassTypeFromType(string $type): string
+    {
+        if (empty(self::CANVASS_TYPES_MAP[$type])) {
+            throw new InvalidValidationData(
+                "{$type} is not in accepted types list"
+            );
+        }
+
+        return self::CANVASS_TYPES_MAP[$type];
+    }
 }

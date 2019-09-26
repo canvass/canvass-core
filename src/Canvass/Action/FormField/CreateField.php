@@ -7,6 +7,7 @@ use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
+use Canvass\Support\FieldTypes;
 
 final class CreateField extends AbstractFieldAction
 {
@@ -21,7 +22,8 @@ final class CreateField extends AbstractFieldAction
         Validate $validator,
         $owner_id = null,
         ValidationMap $validation_map = null
-    ) {
+    )
+    {
         parent::__construct($form, $field, $owner_id);
 
         $this->validator = $validator;
@@ -42,6 +44,11 @@ final class CreateField extends AbstractFieldAction
                 $this->field->setAttribute($key, $data[$key]);
             }
         }
+        
+        $this->field->setAttribute(
+            'canvass_type',
+            FieldTypes::getCanvassTypeFromType($type)
+        );
 
         $this->field->setAttribute('form_id', $this->form->getId());
 
