@@ -11,7 +11,6 @@ final class ValidateGroupField extends AbstractValidateFieldAction
             'label' => true,
             'identifier' => true,
             'type' => true,
-            'options' => true,
             'classes' => false,
             'value' => false,
             'help_text' => false,
