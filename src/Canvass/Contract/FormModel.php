@@ -7,10 +7,21 @@ interface FormModel extends Model
     public function findAllForListing($owner_id = null);
 
     /**
+     * @param mixed|null $parent_id If null, return all fields
      * @return \Canvass\Contract\FormFieldModel[]|null */
-    public function findFields();
+    public function findFields($parent_id = null);
 
-    public function findFieldWithSortOf(int $sort): ?FormFieldModel;
+    public function findFieldWithSortOf(int $sort, $parent_id = 0): ?FormFieldModel;
+
+    /**
+     * @param int $sort
+     * @param int $parent_id
+     * @return \Canvass\Contract\FormFieldModel[]|null
+     */
+    public function findFieldsWithSortGreaterThan(
+        int $sort,
+        $parent_id = 0
+    );
 
     /**
      * @return \Canvass\Contract\FormFieldModel[]|null */
