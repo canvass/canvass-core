@@ -2,7 +2,7 @@
 
 namespace Canvass\Action\Validation\FormField;
 
-final class ValidateInputField extends AbstractValidateFieldAction
+abstract class ValidateInputField extends AbstractValidateFieldAction
 {
     public static function getValidationKeysWithRequiredValue(): array
     {

@@ -8,6 +8,8 @@ use Canvass\Exception\InvalidValidationData;
 abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
 {
     private $rules;
+    /** @var array */
+    protected $attributes_validation_rules;
 
     public function __construct($validator, $validationConverter = null)
     {
@@ -91,4 +93,22 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
 
         return [$name => $rules];
     }
+
+    public function validateAttributes($attributes): bool
+    {
+        if (null === $this->attributes_validation_rules) {
+            throw new InvalidValidationData(
+                'Attempting to validate attributes without any rules'
+            );
+        }
+
+        return $this->validateDataWithRules(
+            $attributes,
+            $this->attributes_validation_rules
+        );
+    }
+
+    abstract public function hasValidatableAttributes(): bool;
+
+    abstract public function convertAttributesData($attributes): array;
 }

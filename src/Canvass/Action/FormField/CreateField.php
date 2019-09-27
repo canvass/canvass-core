@@ -43,10 +43,22 @@ final class CreateField extends AbstractFieldAction
     {
         $canvass_type = FieldTypes::getCanvassTypeFromType($type);
 
+        $attributes = $data['attributes'];
+        unset($data['attributes']);
+
         $validate = $this->getValidateAction($type, $canvass_type);
 
         if (! $validate->validate($data)) {
             return false;
+        }
+
+        if ($validate->hasValidatableAttributes()) {
+            $validate->validateAttributes($attributes);
+
+            $this->field->setAttribute(
+                'attributes',
+                $validate->convertAttributesData($attributes)
+            );
         }
 
         foreach (array_keys($validate::getValidationKeysWithRequiredValue()) as $key) {

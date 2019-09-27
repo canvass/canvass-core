@@ -2,6 +2,8 @@
 
 namespace Canvass\Action\Validation;
 
+use Canvass\Exception\InvalidValidationData;
+
 abstract class AbstractValidateDataAction
 {
     /** @var \Canvass\Contract\Validate */
@@ -22,14 +24,17 @@ abstract class AbstractValidateDataAction
 
     public function validate($data): bool
     {
-        $rules = $this->getValidationRules();
+        return $this->validateDataWithRules($data, $this->getValidationRules());
+    }
 
+    abstract public function getValidationRules(): array;
+
+    protected function validateDataWithRules($data, $rules)
+    {
         if (null !== $this->validationConverter) {
             $rules = $this->validationConverter->convertRulesToFormat($rules);
         }
 
         return $this->validator->validate($data, $rules);
     }
-
-    abstract public function getValidationRules(): array;
 }
