@@ -4,7 +4,7 @@ namespace Canvass\Support;
 
 use Canvass\Exception\InvalidValidationData;
 
-class FieldTypes
+final class FieldTypes
 {
     private const CANVASS_TYPES_MAP = [
         'date' => 'input',
@@ -47,6 +47,20 @@ class FieldTypes
 
     /**
      * @param string $type
+     * @return bool
+     * @throws \Canvass\Exception\InvalidValidationData
+     */
+    public static function isValid(string $type): bool
+    {
+        if (! in_array($type, self::get(true), true)) {
+            return ! empty(self::getCanvassTypeFromType($type));
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $type
      * @return string
      * @throws \Canvass\Exception\InvalidValidationData
      */
@@ -59,5 +73,19 @@ class FieldTypes
         }
 
         return self::CANVASS_TYPES_MAP[$type];
+    }
+
+    public static function getInputTypes(): array
+    {
+        return [
+            'text' => 'Generic Text',
+            'date' => 'Date',
+            'email' => 'Email Address',
+            'number' => 'Number',
+//            'search' => 'Search Box',
+            'tel' => 'Phone Number',
+            'time' => 'Time',
+            'url' => 'Url',
+        ];
     }
 }
