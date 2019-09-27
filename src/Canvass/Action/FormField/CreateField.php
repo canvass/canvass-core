@@ -7,6 +7,7 @@ use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
+use Canvass\Exception\InvalidValidationData;
 use Canvass\Support\FieldTypes;
 
 final class CreateField extends AbstractFieldAction
@@ -31,9 +32,18 @@ final class CreateField extends AbstractFieldAction
         $this->validation_map = $validation_map;
     }
 
+    /**
+     * @param $data
+     * @param string $type
+     * @param int $sort
+     * @return bool
+     * @throws \Canvass\Exception\InvalidValidationData
+     */
     public function run($data, string $type, int $sort): bool
     {
-        $validate = $this->getValidateAction($type);
+        $canvass_type = FieldTypes::getCanvassTypeFromType($type);
+
+        $validate = $this->getValidateAction($type, $canvass_type);
 
         if (! $validate->validate($data)) {
             return false;
@@ -45,10 +55,7 @@ final class CreateField extends AbstractFieldAction
             }
         }
         
-        $this->field->setAttribute(
-            'canvass_type',
-            FieldTypes::getCanvassTypeFromType($type)
-        );
+        $this->field->setAttribute('canvass_type', $canvass_type);
 
         $this->field->setAttribute('form_id', $this->form->getId());
 
@@ -73,13 +80,39 @@ final class CreateField extends AbstractFieldAction
         }
     }
 
-    protected function getValidateAction(string $type): AbstractValidateFieldAction
+    /**
+     * @param string $type
+     * @param string|null $alternate_type
+     * @return \Canvass\Action\Validation\FormField\AbstractValidateFieldAction
+     * @throws \Canvass\Exception\InvalidValidationData
+     */
+    protected function getValidateAction(
+        string $type,
+        string $alternate_type = null
+    ): AbstractValidateFieldAction
+    {
+        try {
+            $class = $this->getValidateActionClassName($type);
+        } catch (InvalidValidationData $e) {
+            $class = $this->getValidateActionClassName($alternate_type);
+        }
+
+        /** @var \Canvass\Action\Validation\AbstractValidateDataAction $validate */
+        return new $class($this->validator, $this->validation_map);
+    }
+
+    protected function getValidateActionClassName(string $type): string
     {
         $ucType = ucfirst(strtolower($type));
 
         $class = "\Canvass\Action\Validation\FormField\Validate{$ucType}Field";
 
-        /** @var \Canvass\Action\Validation\AbstractValidateDataAction $validate */
-        return new $class($this->validator, $this->validation_map);
+        if (! class_exists($class)) {
+            throw new InvalidValidationData(
+                'There is no validation action for ' . $type
+            );
+        }
+
+        return $class;
     }
 }

@@ -10,7 +10,6 @@ final class ValidateInputField extends AbstractValidateFieldAction
             'name' => true,
             'label' => true,
             'identifier' => true,
-            'type' => true,
             'classes' => false,
             'value' => false,
             'help_text' => false,
