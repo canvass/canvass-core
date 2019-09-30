@@ -2,18 +2,13 @@
 
 namespace Canvass\Action\Validation\FormField;
 
-final class ValidateTextareaField extends AbstractValidateFieldAction
+final class ValidateUrlField extends AbstractValidateFieldAction
 {
-    private const WRAP_VALUES = ['hard', 'soft', 'off'];
-
     protected $attributes_validation_rules = [
         'required' => ['required' => false,],
         'minlength' => ['required' => false, 'numeric' => true,],
         'maxlength' => ['required' => false, 'numeric' => true,],
-        'rows' => ['required' => false, 'numeric' => true,],
-        'cols' => ['required' => false, 'numeric' => true,],
         'placeholder' => ['required' => false, 'max_length' => 160,],
-        'wrap' => ['required' => false, 'one_of' => self::WRAP_VALUES,],
     ];
 
     public static function getValidationKeysWithRequiredValue(): array
@@ -43,21 +38,6 @@ final class ValidateTextareaField extends AbstractValidateFieldAction
 
         if (! empty($attributes['maxlength'])) {
             $return['maxlength'] = (int) $attributes['maxlength'];
-        }
-
-        if (! empty($attributes['rows'])) {
-            $return['rows'] = (int) $attributes['rows'];
-        }
-
-        if (! empty($attributes['cols'])) {
-            $return['cols'] = (int) $attributes['cols'];
-        }
-
-        if (
-            ! empty($attributes['wrap']) &&
-            in_array($attributes['wrap'], self::WRAP_VALUES, true)
-        ) {
-            $return['wrap'] = $attributes['wrap'];
         }
 
         return $return;

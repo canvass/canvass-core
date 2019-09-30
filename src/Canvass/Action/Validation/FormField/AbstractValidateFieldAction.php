@@ -6,6 +6,7 @@ use Canvass\Action\Validation\AbstractValidateDataAction;
 use Canvass\Exception\InvalidValidationData;
 
 abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
+    implements InterfaceValidateField
 {
     private $rules;
     /** @var array */
@@ -108,7 +109,13 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
         );
     }
 
-    abstract public function hasValidatableAttributes(): bool;
+    public function hasValidatableAttributes(): bool
+    {
+        return ! empty($this->attributes_validation_rules);
+    }
 
-    abstract public function convertAttributesData($attributes): array;
+    public function convertAttributesData($attributes): array
+    {
+        return [];
+    }
 }

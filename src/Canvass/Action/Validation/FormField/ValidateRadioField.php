@@ -2,7 +2,7 @@
 
 namespace Canvass\Action\Validation\FormField;
 
-final class ValidateRadioField extends ValidateToggleChildField
+final class ValidateRadioField extends AbstractValidateToggleChildField
 {
 
 }

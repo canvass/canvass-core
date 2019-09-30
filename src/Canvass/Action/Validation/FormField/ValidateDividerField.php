@@ -8,8 +8,6 @@ final class ValidateDividerField extends AbstractValidateFieldAction
     {
         return [
             'identifier' => true,
-            'classes' => false,
-            'help_text' => false,
         ];
     }
 }

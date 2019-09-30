@@ -2,19 +2,18 @@
 
 namespace Canvass\Action\Validation\FormField;
 
-final class ValidateGroupField extends AbstractValidateFieldAction
+abstract class AbstractValidateToggleChildField extends AbstractValidateFieldAction
 {
     protected $attributes_validation_rules = [
-        'required' => ['required' => false,],
+        'checked' => ['checked' => false,],
     ];
 
     public static function getValidationKeysWithRequiredValue(): array
     {
         return [
-            'name' => true,
             'label' => true,
             'identifier' => true,
-            'type' => true,
+            'value' => true,
         ];
     }
 
@@ -22,8 +21,8 @@ final class ValidateGroupField extends AbstractValidateFieldAction
     {
         $return = [];
 
-        if (! empty($attributes['required'])) {
-            $return['required'] = 'required';
+        if (! empty($attributes['checked'])) {
+            $return['checked'] = 'checked';
         }
 
         return $return;

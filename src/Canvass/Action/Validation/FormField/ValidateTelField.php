@@ -2,19 +2,16 @@
 
 namespace Canvass\Action\Validation\FormField;
 
-final class ValidateTextField extends AbstractValidateInputField
+final class ValidateTelField extends AbstractValidateInputField
 {
     protected $attributes_validation_rules = [
         'required' => ['required' => false,],
+        'placeholder' => [
+            'required' => false, 'allow_null' => true, 'data_type' => 'string',
+        ],
         'minlength' => ['required' => false, 'numeric' => true,],
         'maxlength' => ['required' => false, 'numeric' => true,],
-        'placeholder' => ['required' => false, 'max_length' => 160,],
     ];
-
-    public function hasValidatableAttributes(): bool
-    {
-        return true;
-    }
 
     public function convertAttributesData($attributes): array
     {
