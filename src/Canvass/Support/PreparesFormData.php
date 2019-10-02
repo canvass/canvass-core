@@ -5,7 +5,7 @@ namespace Canvass\Support;
 /**
  * Trait PreparesFormData
  * @package Canvass\Support
- * @method getAttribute($key)
+ * @method getData($key)
  * @method getId(): int|string
  */
 trait PreparesFormData
@@ -42,13 +42,13 @@ trait PreparesFormData
             'csrf_token' => $csrf_token,
             'html_type' => 'form',
             'id' => $this->getId(),
-            'identifier' => $this->getAttribute('identifier'),
-            'classes' => $this->getAttribute('classes'),
+            'identifier' => $this->getData('identifier'),
+            'classes' => $this->getData('classes'),
             'action_url' => $this->getActionUrl($this->getId()),
-            'redirect_url' => $this->getAttribute('redirect_url'),
-            'introduction' => $this->getAttribute('introduction'),
-            'button_text' => $this->getAttribute('button_text'),
-            'button_classes' => $this->getAttribute('button_classes'),
+            'redirect_url' => $this->getData('redirect_url'),
+            'introduction' => $this->getData('introduction'),
+            'button_text' => $this->getData('button_text'),
+            'button_classes' => $this->getData('button_classes'),
             'fields' => $fields
         ];
 

@@ -4,7 +4,7 @@ namespace Canvass\Contract;
 
 interface Model
 {
-    public function find($id);
+    public function find($id, $owner_id = null);
 
     /**
      * @return bool */
@@ -24,7 +24,7 @@ interface Model
      *
      * @param  string  $key
      * @return mixed */
-    public function getAttribute($key);
+    public function getData($key);
 
     /**
      * Set a given attribute on the model.
@@ -32,5 +32,5 @@ interface Model
      * @param  string  $key
      * @param  mixed  $value
      * @return mixed */
-    public function setAttribute($key, $value);
+    public function setData($key, $value);
 }

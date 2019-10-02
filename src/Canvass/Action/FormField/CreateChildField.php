@@ -35,9 +35,9 @@ final class CreateChildField extends AbstractFieldAction
 
     public function run($data, string $type, int $sort): bool
     {
-        $this->field->setAttribute('parent_id', $this->parent->getId());
+        $this->field->setData('parent_id', $this->parent->getId());
 
-        $this->field->setAttribute('name', $this->parent->getAttribute('name'));
+        $this->field->setData('name', $this->parent->getData('name'));
 
         $create = new CreateField(
             $this->form,

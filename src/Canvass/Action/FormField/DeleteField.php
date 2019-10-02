@@ -6,9 +6,9 @@ final class DeleteField extends AbstractFieldAction
 {
     public function run()
     {
-        $sort = $this->field->getAttribute('sort');
+        $sort = $this->field->getData('sort');
 
-        $parent_id = $this->field->getAttribute('parent_id');
+        $parent_id = $this->field->getData('parent_id');
 
         $deleted = $this->field->delete();
 
@@ -23,7 +23,7 @@ final class DeleteField extends AbstractFieldAction
         }
 
         foreach ($fields as $field) {
-            $field->setAttribute('sort', $field->getAttribute('sort') - 1);
+            $field->setData('sort', $field->getData('sort') - 1);
 
             $field->save();
         }

@@ -7,6 +7,11 @@ interface FormModel extends Model
     public function findAllForListing($owner_id = null);
 
     /**
+     * @param $field_id
+     * @return \Canvass\Contract\FormFieldModel|null */
+    public function findField($field_id);
+
+    /**
      * @param mixed|null $parent_id If null, return all fields
      * @return \Canvass\Contract\FormFieldModel[]|null */
     public function findFields($parent_id = null);

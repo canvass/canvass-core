@@ -43,7 +43,7 @@ final class CreateField extends AbstractFieldAction
     {
         $canvass_type = FieldTypes::getCanvassTypeFromType($type);
 
-        $attributes = $data['attributes'];
+        $attributes = $data['attributes'] ?? [];
         unset($data['attributes']);
 
         $validate = $this->getValidateAction($type, $canvass_type);
@@ -55,7 +55,7 @@ final class CreateField extends AbstractFieldAction
         if ($validate->hasValidatableAttributes()) {
             $validate->validateAttributes($attributes);
 
-            $this->field->setAttribute(
+            $this->field->setData(
                 'attributes',
                 $validate->convertAttributesData($attributes)
             );
@@ -63,15 +63,15 @@ final class CreateField extends AbstractFieldAction
 
         foreach (array_keys($validate::getValidationKeysWithRequiredValue()) as $key) {
             if (isset($data[$key])) {
-                $this->field->setAttribute($key, $data[$key]);
+                $this->field->setData($key, $data[$key]);
             }
         }
         
-        $this->field->setAttribute('canvass_type', $canvass_type);
+        $this->field->setData('canvass_type', $canvass_type);
 
-        $this->field->setAttribute('form_id', $this->form->getId());
+        $this->field->setData('form_id', $this->form->getId());
 
-        $this->field->setAttribute('sort', $sort + 1);
+        $this->field->setData('sort', $sort + 1);
 
         $this->preSave($type);
 
@@ -81,14 +81,14 @@ final class CreateField extends AbstractFieldAction
     private function preSave(string $type): void
     {
         if ('divider' === $type) {
-            $this->field->setAttribute(
+            $this->field->setData(
                 'name',
-                $this->field->getAttribute('identifier')
+                $this->field->getData('identifier')
             );
         }
 
-        if (empty($this->field->getAttribute('type'))) {
-            $this->field->setAttribute('type', $type);
+        if (empty($this->field->getData('type'))) {
+            $this->field->setData('type', $type);
         }
     }
 

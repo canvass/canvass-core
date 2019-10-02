@@ -2,10 +2,12 @@
 
 namespace Canvass\Action\FormField;
 
+use Canvass\Contract\Action;
+use Canvass\Contract\FieldAction;
 use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 
-abstract class AbstractFieldAction
+abstract class AbstractFieldAction implements Action, FieldAction
 {
     /** @var \Canvass\Contract\FormModel */
     protected $form;
@@ -23,5 +25,10 @@ abstract class AbstractFieldAction
         $this->form = $form;
         $this->field = $field;
         $this->owner_id = $owner_id;
+    }
+
+    public function getFormId()
+    {
+        return $this->form->getId();
     }
 }

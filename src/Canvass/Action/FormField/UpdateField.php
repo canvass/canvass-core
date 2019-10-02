@@ -42,7 +42,7 @@ final class UpdateField extends AbstractFieldAction
     ): bool
     {
         $validate = $this->getValidateAction(
-            $type ?? $this->field->getHtmlType()
+            $type ?? $this->field->getData('type')
         );
 
         if (! $validate->validate($data)) {
@@ -51,9 +51,9 @@ final class UpdateField extends AbstractFieldAction
 
         foreach (array_keys($validate::getValidationKeysWithRequiredValue()) as $key) {
             if (isset($data[$key])) {
-                $this->field->setAttribute($key, $data[$key]);
+                $this->field->setData($key, $data[$key]);
             } elseif ($clear_unset_data_keys) {
-                $this->field->setAttribute($key, null);
+                $this->field->setData($key, null);
             }
         }
 

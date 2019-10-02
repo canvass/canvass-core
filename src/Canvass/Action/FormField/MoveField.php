@@ -3,6 +3,7 @@
 namespace Canvass\Action\FormField;
 
 use Canvass\Exception\InvalidSortException;
+use Canvass\Forge;
 
 final class MoveField extends AbstractFieldAction
 {
@@ -11,7 +12,7 @@ final class MoveField extends AbstractFieldAction
 
     public function run(int $direction, $parent_id = 0)
     {
-        $old_sort = (int) $this->field->getAttribute('sort');
+        $old_sort = (int) $this->field->getData('sort');
 
         $new_sort = $old_sort + $direction;
 
@@ -31,7 +32,7 @@ final class MoveField extends AbstractFieldAction
 
         $other_field = $this->form->findFieldWithSortOf($new_sort, $parent_id);
 
-        $this->field->setAttribute('sort', $new_sort);
+        $this->field->setData('sort', $new_sort);
 
         $saved = $this->field->save();
 
@@ -43,8 +44,31 @@ final class MoveField extends AbstractFieldAction
             return true;
         }
 
-        $other_field->setAttribute('sort', $old_sort);
+        $other_field->setData('sort', $old_sort);
 
-        return $other_field->save();
+        $moved = false;
+
+        try {
+            $moved = $other_field->save();
+        } catch (InvalidSortException $e) {
+            $message = 'Moving the field would result in an invalid sort.';
+        } catch (\Throwable $e) {
+            Forge::logThrowable($e);
+
+            $message = 'Could not move field for unknown reasons.';
+        }
+
+        if (! $moved) {
+            return Forge::error($message, $this);
+        }
+
+        return Forge::success(
+            sprintf(
+                'Field, %s, has been moved down.',
+                $this->field->getData('label') ??
+                    $this->field->getData('identifier')
+            ),
+            $this
+        );
     }
 }
