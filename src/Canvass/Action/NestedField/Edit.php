@@ -19,7 +19,7 @@ final class Edit implements Action
             'form' => $form,
             'parent' => $parent,
             'field' => $field,
-            'type' => $field->getData('canvass_type')
+            'type' => $field->getData('general_type')
         ]);
     }
 }

@@ -14,13 +14,14 @@ trait PreparesFormFieldData
     public function prepareData(): array
     {
         return [
-            'html_type' => $this->getHtmlType(),
             'name' => $this->getData('name'),
             'label' => $this->getData('label'),
             'type' => $this->getData('type'),
+            'general_type' => $this->getData('general_type'),
             'value' => $this->getData('value'),
             'identifier' => $this->getData('identifier'),
             'classes' => $this->getData('classes'),
+            'wrap_classes' => $this->getData('wrap_classes'),
             'help_text' => $this->getData('help_text'),
             'attributes' => $this->getData('attributes'),
             'children' => [],

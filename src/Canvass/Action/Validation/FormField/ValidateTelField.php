@@ -2,6 +2,9 @@
 
 namespace Canvass\Action\Validation\FormField;
 
+use Canvass\Support\FieldData;
+use Canvass\Support\Validation\Builder;
+
 final class ValidateTelField extends AbstractValidateInputField
 {
     protected $attributes_validation_rules = [
@@ -12,6 +15,16 @@ final class ValidateTelField extends AbstractValidateInputField
         'minlength' => ['required' => false, 'numeric' => true,],
         'maxlength' => ['required' => false, 'numeric' => true,],
     ];
+
+    public function populateValidationRulesFromFieldData(
+        FieldData $field,
+        array &$rules
+    ) {
+        AbstractValidateInputField::populateTextBasedFieldRules(
+            $field,
+            $rules
+        );
+    }
 
     public function convertAttributesData($attributes): array
     {

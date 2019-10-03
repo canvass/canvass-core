@@ -41,12 +41,12 @@ final class CreateField extends AbstractFieldAction
      */
     public function run($data, string $type, int $sort): bool
     {
-        $canvass_type = FieldTypes::getCanvassTypeFromType($type);
+        $general_type = FieldTypes::getGeneralTypeFromType($type);
 
         $attributes = $data['attributes'] ?? [];
         unset($data['attributes']);
 
-        $validate = $this->getValidateAction($type, $canvass_type);
+        $validate = FieldTypes::getValidateAction($type, $general_type);
 
         if (! $validate->validate($data)) {
             return false;
@@ -67,7 +67,7 @@ final class CreateField extends AbstractFieldAction
             }
         }
         
-        $this->field->setData('canvass_type', $canvass_type);
+        $this->field->setData('general_type', $general_type);
 
         $this->field->setData('form_id', $this->form->getId());
 
@@ -90,41 +90,5 @@ final class CreateField extends AbstractFieldAction
         if (empty($this->field->getData('type'))) {
             $this->field->setData('type', $type);
         }
-    }
-
-    /**
-     * @param string $type
-     * @param string|null $alternate_type
-     * @return \Canvass\Action\Validation\FormField\AbstractValidateFieldAction
-     * @throws \Canvass\Exception\InvalidValidationData
-     */
-    protected function getValidateAction(
-        string $type,
-        string $alternate_type = null
-    ): AbstractValidateFieldAction
-    {
-        try {
-            $class = $this->getValidateActionClassName($type);
-        } catch (InvalidValidationData $e) {
-            $class = $this->getValidateActionClassName($alternate_type);
-        }
-
-        /** @var \Canvass\Action\Validation\AbstractValidateDataAction $validate */
-        return new $class($this->validator, $this->validation_map);
-    }
-
-    protected function getValidateActionClassName(string $type): string
-    {
-        $ucType = ucfirst(strtolower($type));
-
-        $class = "\Canvass\Action\Validation\FormField\Validate{$ucType}Field";
-
-        if (! class_exists($class)) {
-            throw new InvalidValidationData(
-                'There is no validation action for ' . $type
-            );
-        }
-
-        return $class;
     }
 }

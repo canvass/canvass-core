@@ -2,6 +2,9 @@
 
 namespace Canvass\Action\Validation\FormField;
 
+use Canvass\Support\FieldData;
+use Canvass\Support\Validation\Builder;
+
 final class ValidateNumberField extends AbstractValidateInputField
 {
     protected $attributes_validation_rules = [
@@ -13,6 +16,25 @@ final class ValidateNumberField extends AbstractValidateInputField
         'min' => ['required' => false, 'numeric' => true,],
         'max' => ['required' => false, 'numeric' => true,],
     ];
+
+    public function populateValidationRulesFromFieldData(
+        FieldData $field,
+        array &$rules
+    ) {
+        $builder = Builder::start()
+            ->required($field->hasAttribute('required'))
+            ->numeric();
+
+        if ($field->hasAttribute('min')) {
+            $builder->minValue($field->getAttribute('min'));
+        }
+
+        if ($field->hasAttribute('max')) {
+            $builder->maxValue($field->getAttribute('max'));
+        }
+
+        $rules[$field['name']] = $builder->build();
+    }
 
     public function convertAttributesData($attributes): array
     {

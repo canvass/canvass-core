@@ -2,6 +2,9 @@
 
 namespace Canvass\Action\Validation\FormField;
 
+use Canvass\Support\FieldData;
+use Canvass\Support\Validation\Builder;
+
 final class ValidateDateField extends AbstractValidateInputField
 {
     protected $attributes_validation_rules = [
@@ -17,6 +20,25 @@ final class ValidateDateField extends AbstractValidateInputField
         'min' => ['required' => false, 'date_format' => 'Y-m-d',],
         'max' => ['required' => false, 'date_format' => 'Y-m-d',],
     ];
+
+    public function populateValidationRulesFromFieldData(
+        FieldData $field,
+        array &$rules
+    ) {
+        $builder = Builder::start()
+            ->required($field->hasAttribute('required'))
+            ->dateFormat();
+        
+        if ($field->hasAttribute('min')) {
+            $builder->minDate($field->getAttribute('min'));
+        }
+
+        if ($field->hasAttribute('max')) {
+            $builder->maxDate($field->getAttribute('max'));
+        }
+
+        $rules[$field['name']] = $builder->build();
+    }
 
     public function convertAttributesData($attributes): array
     {

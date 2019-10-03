@@ -2,6 +2,9 @@
 
 namespace Canvass\Action\Validation\FormField;
 
+use Canvass\Support\FieldData;
+use Canvass\Support\Validation\Builder;
+
 final class ValidateUrlField extends AbstractValidateFieldAction
 {
     protected $attributes_validation_rules = [
@@ -10,6 +13,17 @@ final class ValidateUrlField extends AbstractValidateFieldAction
         'maxlength' => ['required' => false, 'numeric' => true,],
         'placeholder' => ['required' => false, 'max_length' => 160,],
     ];
+
+    public function populateValidationRulesFromFieldData(
+        FieldData $field,
+        array &$rules
+    )
+    {
+        AbstractValidateInputField::populateTextBasedFieldRules(
+            $field,
+            $rules
+        );
+    }
 
     public static function getValidationKeysWithRequiredValue(): array
     {

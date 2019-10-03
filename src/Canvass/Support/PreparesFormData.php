@@ -2,6 +2,8 @@
 
 namespace Canvass\Support;
 
+use Canvass\Forge;
+
 /**
  * Trait PreparesFormData
  * @package Canvass\Support
@@ -10,38 +12,38 @@ namespace Canvass\Support;
  */
 trait PreparesFormData
 {
-    public function getNestedFields()
+    /**
+     * @return \Canvass\Support\FieldData[]
+     */
+    public function getNestedFields(): array
     {
         $fields = $this->findFields();
         
         $nested = [];
 
         foreach ($fields as $field) {
-            $prepared = $field->prepareData();
+            $data = new FieldData($field);
 
             $level = $field['parent_id'] > 0 ? $field['parent_id'] : $field['id'];
             
             if (empty($nested[$level])) {
-                $prepared['children'] = [];
-                
-                $nested[$level] = $prepared;
+                $nested[$level] = $data;
             } else {
-                $nested[$level]['children'][] = $prepared;
+                $nested[$level]->addNestedField($data);
             }
         }
-        
+
         return $nested;
     }
     
     /**
      * @param array|null $fields
      * @return array */
-    public function prepareData($fields = null, $csrf_token = null): array
+    public function prepareData($fields = null): array
     {
         $data = [
-            'csrf_token' => $csrf_token,
-            'html_type' => 'form',
             'id' => $this->getId(),
+            'name' => $this->getData('name'),
             'identifier' => $this->getData('identifier'),
             'classes' => $this->getData('classes'),
             'action_url' => $this->getActionUrl($this->getId()),
@@ -49,6 +51,7 @@ trait PreparesFormData
             'introduction' => $this->getData('introduction'),
             'button_text' => $this->getData('button_text'),
             'button_classes' => $this->getData('button_classes'),
+            'meta' => [],
             'fields' => $fields
         ];
 
@@ -58,5 +61,8 @@ trait PreparesFormData
     /** @return \Canvass\Contract\FormFieldModel[]|null */
     abstract public function findFields();
 
-    abstract protected function getActionUrl($form_id): string;
+    protected function getActionUrl($form_id): string
+    {
+        return Forge::getBaseUrlSegment() . $form_id;
+    }
 }

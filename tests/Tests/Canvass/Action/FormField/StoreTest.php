@@ -36,7 +36,7 @@ class StoreTest extends TestCase
 
         $this->assertEquals('text', $added->getData('type'));
 
-        $this->assertEquals('input', $added->getData('canvass_type'));
+        $this->assertEquals('input', $added->getData('general_type'));
 
         $this->assertEquals(1, $added->getData('sort'));
     }

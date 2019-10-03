@@ -92,9 +92,4 @@ class Form extends Model implements FormModel
 
         return $field->findAllByFormId($this->getId(), $parent_id);
     }
-
-    protected function getActionUrl($form_id): string
-    {
-        return '/form/' . $form_id;
-    }
 }

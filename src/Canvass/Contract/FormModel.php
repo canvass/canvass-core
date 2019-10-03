@@ -2,8 +2,10 @@
 
 namespace Canvass\Contract;
 
-interface FormModel extends Model
+interface FormModel
 {
+    public function find($id, $owner_id = null);
+
     public function findAllForListing($owner_id = null);
 
     /**
@@ -36,4 +38,24 @@ interface FormModel extends Model
      * @param \Canvass\Contract\FormFieldModel[]|null $fields
      * @return array */
     public function prepareData($fields = null): array;
+
+    /**
+     * @return mixed
+     */
+    public function getId();
+
+    /**
+     * Get a given attribute on the model.
+     *
+     * @param  string  $key
+     * @return mixed */
+    public function getData($key);
+
+    /**
+     * Set a given attribute on the model.
+     *
+     * @param  string  $key
+     * @param  mixed  $value
+     * @return mixed */
+    public function setData($key, $value);
 }

@@ -2,6 +2,9 @@
 
 namespace Canvass\Action\Validation\FormField;
 
+use Canvass\Support\FieldData;
+use Canvass\Support\Validation\Builder;
+
 final class ValidateTextareaField extends AbstractValidateFieldAction
 {
     private const WRAP_VALUES = ['hard', 'soft', 'off'];
@@ -15,6 +18,17 @@ final class ValidateTextareaField extends AbstractValidateFieldAction
         'placeholder' => ['required' => false, 'max_length' => 160,],
         'wrap' => ['required' => false, 'one_of' => self::WRAP_VALUES,],
     ];
+
+    public function populateValidationRulesFromFieldData(
+        FieldData $field,
+        array &$rules
+    )
+    {
+        AbstractValidateInputField::populateTextBasedFieldRules(
+            $field,
+            $rules
+        );
+    }
 
     public static function getValidationKeysWithRequiredValue(): array
     {

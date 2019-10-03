@@ -2,6 +2,9 @@
 
 namespace Canvass\Action\Validation\FormField;
 
+use Canvass\Support\FieldData;
+use Canvass\Support\Validation\Builder;
+
 final class ValidateEmailField extends AbstractValidateInputField
 {
     protected $attributes_validation_rules = [
@@ -15,6 +18,17 @@ final class ValidateEmailField extends AbstractValidateInputField
             'required' => false, 'allow_null' => true, 'data_type' => 'bool',
         ],
     ];
+
+    public function populateValidationRulesFromFieldData(
+        FieldData $field,
+        array &$rules
+    )
+    {
+        AbstractValidateInputField::populateTextBasedFieldRules(
+            $field,
+            $rules
+        );
+    }
 
     public function convertAttributesData($attributes): array
     {

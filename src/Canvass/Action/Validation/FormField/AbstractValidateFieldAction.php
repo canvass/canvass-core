@@ -4,6 +4,8 @@ namespace Canvass\Action\Validation\FormField;
 
 use Canvass\Action\Validation\AbstractValidateDataAction;
 use Canvass\Exception\InvalidValidationData;
+use Canvass\Support\FieldData;
+use Canvass\Support\Validation\Builder;
 
 abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
     implements InterfaceValidateField
@@ -16,47 +18,20 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
     {
         parent::__construct($validator, $validationConverter);
 
+        $default_rules = Builder::start()->isStringType()->optional();
+
+        $rules_160 = $default_rules->maxLength(160)->build();
+
         $this->rules = [
-            'name' => [
-                'data_type' => 'string',
-                'max_length' => 160,
-                'required' => false,
-            ],
-            'label' => [
-                'data_type' => 'string',
-                'max_length' => 160,
-                'required' => false,
-            ],
-            'identifier' => [
-                'data_type' => 'string',
-                'max_length' => 160,
-                'required' => true,
-            ],
-            'classes' => [
-                'data_type' => 'string',
-                'max_length' => 160,
-                'required' => false,
-            ],
-            'type' => [
-                'data_type' => 'string',
-                'max_length' => 160,
-                'required' => true,
-            ],
-            'options' => [
-                'data_type' => 'string',
-                'max_length' => 1000,
-                'required' => false,
-            ],
-            'value' => [
-                'data_type' => 'string',
-                'max_length' => 160,
-                'required' => false,
-            ],
-            'help_text' => [
-                'data_type' => 'string',
-                'max_length' => 320,
-                'required' => false,
-            ],
+            'name' => $rules_160,
+            'label' => $rules_160,
+            'identifier' => $rules_160,
+            'classes' => $rules_160,
+            'type' => $rules_160,
+            'general_type' => $rules_160,
+            'value' => $rules_160,
+            'options' => $default_rules->maxLength(1000)->build(),
+            'help_text' => $default_rules->maxLength(320)->build(),
         ];
     }
 
@@ -70,6 +45,11 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
 
         return $rules;
     }
+
+    abstract public function populateValidationRulesFromFieldData(
+        FieldData $field,
+        array &$rules
+    );
 
     public static function getValidationKeysWithRequiredValue()
     {

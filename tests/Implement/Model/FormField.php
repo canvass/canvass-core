@@ -21,7 +21,7 @@ class FormField extends Model implements FormFieldModel
         'name' => 'field',
         'label' => 'Field',
         'type' => 'text',
-        'canvass_type' => 'input',
+        'general_type' => 'input',
         'value' => '',
         'help_text' => '',
         'attributes' => []
@@ -48,7 +48,7 @@ class FormField extends Model implements FormFieldModel
 
     public function getHtmlType(): string
     {
-        return $this->data['canvass_type'];
+        return $this->data['general_type'];
     }
 
     public function retrieveChildren()
@@ -72,6 +72,11 @@ class FormField extends Model implements FormFieldModel
     public function getDataFromAttributes($key)
     {
         return $this->data['attributes'][$key] ?? '';
+    }
+
+    public function hasAttribute($key): bool
+    {
+        return isset($this->data['attributes'][$key]);
     }
 
     public function setDataToAttributes($key, $value)

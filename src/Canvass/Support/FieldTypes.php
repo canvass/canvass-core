@@ -2,11 +2,20 @@
 
 namespace Canvass\Support;
 
+use Canvass\Action\Validation\FormField\AbstractValidateFieldAction;
+use Canvass\Contract\Validate;
+use Canvass\Contract\ValidationMap;
 use Canvass\Exception\InvalidValidationData;
+use Canvass\Forge;
 
 final class FieldTypes
 {
-    private const CANVASS_TYPES_MAP = [
+    public const INPUT_TYPES = [
+        'checkbox', 'date', 'email', 'number', 'radio', 'search',
+        'tel', 'text', 'time', 'url',
+    ];
+
+    private const GENERAL_TYPES_MAP = [
         'date' => 'input',
         'email' => 'input',
         'number' => 'input',
@@ -53,7 +62,7 @@ final class FieldTypes
     public static function isValid(string $type): bool
     {
         if (! in_array($type, self::get(true), true)) {
-            return ! empty(self::getCanvassTypeFromType($type));
+            return ! empty(self::getGeneralTypeFromType($type));
         }
 
         return true;
@@ -64,15 +73,15 @@ final class FieldTypes
      * @return string
      * @throws \Canvass\Exception\InvalidValidationData
      */
-    public static function getCanvassTypeFromType(string $type): string
+    public static function getGeneralTypeFromType(string $type): string
     {
-        if (empty(self::CANVASS_TYPES_MAP[$type])) {
+        if (empty(self::GENERAL_TYPES_MAP[$type])) {
             throw new InvalidValidationData(
                 "{$type} is not in accepted types list"
             );
         }
 
-        return self::CANVASS_TYPES_MAP[$type];
+        return self::GENERAL_TYPES_MAP[$type];
     }
 
     public static function getInputTypes(): array
@@ -87,5 +96,48 @@ final class FieldTypes
             'time' => 'Time',
             'url' => 'Url',
         ];
+    }
+
+    /**
+     * @param string $type
+     * @param string|null $alternate_type
+     * @param \Canvass\Contract\Validate $validator
+     * @param \Canvass\Contract\ValidationMap $validation_map
+     * @return \Canvass\Action\Validation\FormField\AbstractValidateFieldAction
+     * @throws \Canvass\Exception\InvalidValidationData
+     */
+    public static function getValidateAction(
+        string $type,
+        string $alternate_type = null,
+        Validate $validator = null,
+        ValidationMap $validation_map = null
+    ): AbstractValidateFieldAction
+    {
+        try {
+            $class = self::getValidateActionClassName($type);
+        } catch (InvalidValidationData $e) {
+            $class = self::getValidateActionClassName($alternate_type);
+        }
+
+        /** @var \Canvass\Action\Validation\AbstractValidateDataAction $validate */
+        return new $class(
+            $validator ?? Forge::validator(),
+            $validation_map ?? Forge::validationMap()
+        );
+    }
+
+    public static function getValidateActionClassName(string $type): string
+    {
+        $ucType = ucfirst(strtolower($type));
+
+        $class = "\Canvass\Action\Validation\FormField\Validate{$ucType}Field";
+
+        if (! class_exists($class)) {
+            throw new InvalidValidationData(
+                'There is no validation action for ' . $type
+            );
+        }
+
+        return $class;
     }
 }

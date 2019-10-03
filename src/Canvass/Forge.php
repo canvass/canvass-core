@@ -20,6 +20,8 @@ final class Forge extends \WebAnvil\Forge
 
     private static $owner_id;
 
+    private static $base_url_segment = '/form/';
+
     /**
      * @return \Canvass\Contract\FormModel
      * @throws \WebAnvil\ForgeClosureNotFoundException
@@ -80,6 +82,11 @@ final class Forge extends \WebAnvil\Forge
     public static function getOwnerId()
     {
        return self::$owner_id;
+    }
+
+    public static function getBaseUrlSegment(): string
+    {
+        return self::$base_url_segment;
     }
 
     /**
@@ -177,5 +184,11 @@ final class Forge extends \WebAnvil\Forge
     public static function setOwnerId($owner_id): void
     {
         self::$owner_id = $owner_id;
+    }
+
+    public static function setBaseUrlSegment(string $segment): void
+    {
+        self::$base_url_segment =
+            '/' . trim($segment, '/ \t\n\r\0\x0B') . '/';
     }
 }
