@@ -4,24 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46b93007d1e5863dc39090810edb680c",
+    "content-hash": "82148d4ffeaafafa8e7c93b6d4a8d2a6",
     "packages": [
         {
             "name": "promo-code/web-anvil",
-            "version": "v0.1-alpha",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/promo-code/web-anvil.git",
-                "reference": "a42ec828b7e2fd7458f4f4efebf1662b28abffa4"
+                "reference": "89e74167faaad6b85aac8d219c44cd6d4f4697a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/promo-code/web-anvil/zipball/a42ec828b7e2fd7458f4f4efebf1662b28abffa4",
-                "reference": "a42ec828b7e2fd7458f4f4efebf1662b28abffa4",
+                "url": "https://api.github.com/repos/promo-code/web-anvil/zipball/89e74167faaad6b85aac8d219c44cd6d4f4697a3",
+                "reference": "89e74167faaad6b85aac8d219c44cd6d4f4697a3",
                 "shasum": ""
-            },
-            "require-dev": {
-                "roave/security-advisories": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -40,7 +37,7 @@
                 }
             ],
             "description": "A simple PHP factory/forge static class",
-            "time": "2019-10-02T15:04:21+00:00"
+            "time": "2019-10-04T13:40:31+00:00"
         }
     ],
     "packages-dev": [
@@ -717,16 +714,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.3.5",
+            "version": "8.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "302faed7059fde575cf3403a78c730c5e3a62750"
+                "reference": "57e5e77b62086033528ee1f4063ae03035f57894"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/302faed7059fde575cf3403a78c730c5e3a62750",
-                "reference": "302faed7059fde575cf3403a78c730c5e3a62750",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/57e5e77b62086033528ee1f4063ae03035f57894",
+                "reference": "57e5e77b62086033528ee1f4063ae03035f57894",
                 "shasum": ""
             },
             "require": {
@@ -770,7 +767,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "8.3-dev"
+                    "dev-master": "8.4-dev"
                 }
             },
             "autoload": {
@@ -796,7 +793,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-09-14T09:12:03+00:00"
+            "time": "2019-10-04T03:12:25+00:00"
         },
         {
             "name": "roave/security-advisories",
