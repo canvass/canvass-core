@@ -2,8 +2,6 @@
 
 namespace Canvass\Support\Validation;
 
-use Canvass\Support\FieldData;
-
 class Builder
 {
     private $rules = [];

@@ -1,11 +1,12 @@
 <?php
 
-namespace Canvass\Action\Validation\FormField;
+namespace Canvass\Field\Select;
 
-use Canvass\Support\FieldData;
+use Canvass\Contract\FieldData;
+use Canvass\Field\AbstractField\AbstractValidateFieldAction;
 use Canvass\Support\Validation\Builder;
 
-final class ValidateGroupField extends AbstractValidateFieldAction
+final class Validation extends AbstractValidateFieldAction
 {
     protected $attributes_validation_rules = [
         'required' => ['required' => false,],
@@ -16,20 +17,17 @@ final class ValidateGroupField extends AbstractValidateFieldAction
         array &$rules
     )
     {
-        $is_checkbox = 'checkbox-group' === $field['type'];
-
         $builder = Builder::start()
             ->required($field->hasAttribute('required'));
 
         foreach ($field['children'] as $child) {
-            if ($is_checkbox) {
-                $builder->addValueToInGroup($child['value']);
-            } else {
-                $builder->addOneOf($child['value']);
-            }
+            $builder->addOneOf($child['value']);
         }
 
-        $rules[$field['name']] = $builder->build();
+        $rules[$field['name']] = [
+            'field' => $field,
+            'rules' => $builder->build()
+        ];
     }
 
     public static function getValidationKeysWithRequiredValue(): array
@@ -38,7 +36,7 @@ final class ValidateGroupField extends AbstractValidateFieldAction
             'name' => true,
             'label' => true,
             'identifier' => true,
-            'type' => true,
+            'classes' => false,
         ];
     }
 

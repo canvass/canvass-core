@@ -4,7 +4,7 @@ namespace Canvass\Support;
 
 use Canvass\Contract\FormFieldModel;
 
-final class FieldData implements \ArrayAccess
+class FieldData implements \Canvass\Contract\FieldData
 {
     /** @var \Canvass\Contract\FormFieldModel */
     private $field;
@@ -21,22 +21,18 @@ final class FieldData implements \ArrayAccess
         return $this->field->getDataFromAttributes($key);
     }
 
-    public function hasAttribute($key)
+    public function hasAttribute($key): bool
     {
         return $this->field->hasAttribute($key);
     }
 
-    /**
-     * @param FormFieldModel|FieldData $field
-     * @return \Canvass\Support\FieldData
-     */
-    public function addNestedField($field): self
+    public function addNestedField($field): \Canvass\Contract\FieldData
     {
-        if ($field instanceof FormFieldModel) {
+        if ($field instanceof \Canvass\Contract\FormFieldModel) {
             $field = new self($field);
         }
 
-        if (! ($field instanceof self)) {
+        if (! ($field instanceof \Canvass\Contract\FieldData)) {
             $model_class = FormFieldModel::class;
             $data_class = self::class;
             throw new \InvalidArgumentException(
@@ -52,6 +48,11 @@ final class FieldData implements \ArrayAccess
     public function clearNestedFields(): void
     {
         $this->children = [];
+    }
+
+    public function getField(): FormFieldModel
+    {
+        return $this->field;
     }
 
     public function toArray(): array

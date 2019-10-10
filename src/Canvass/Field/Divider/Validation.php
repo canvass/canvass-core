@@ -1,15 +1,16 @@
 <?php
 
-namespace Canvass\Action\Validation\FormField;
+namespace Canvass\Field\Divider;
 
-use Canvass\Support\FieldData;
+use Canvass\Contract\FieldData;
 
-final class ValidateDividerField extends AbstractValidateFieldAction
+final class Validation extends \Canvass\Field\AbstractField\Input\Validation
 {
     public static function getValidationKeysWithRequiredValue(): array
     {
         return [
             'identifier' => true,
+            'classes' => false
         ];
     }
 

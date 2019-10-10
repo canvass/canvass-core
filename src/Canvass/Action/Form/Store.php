@@ -30,6 +30,8 @@ class Store implements Action, FieldAction
 
         $this->form = Forge::form();
 
+        $this->form->setData('owner_id', Forge::getOwnerId());
+
         try {
             foreach ($data as $key => $value) {
                 $this->form->setData($key, $value);

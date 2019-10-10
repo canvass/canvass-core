@@ -2,11 +2,12 @@
 
 namespace Canvass\Action\FormField;
 
-use Canvass\Action\Validation\FormField\AbstractValidateFieldAction;
 use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
+use Canvass\Field\AbstractField\AbstractValidateFieldAction;
+use Canvass\Support\FieldTypes;
 
 final class UpdateField extends AbstractFieldAction
 {
@@ -34,6 +35,8 @@ final class UpdateField extends AbstractFieldAction
      * @param string|null $type The type to use for data validation
      * @param bool $clear_unset_data_keys If a key from the validation list is not in the $data array, should it be set to null or be left alone?
      * @return bool
+     * @throws \Canvass\Exception\InvalidValidationData
+     * @throws \WebAnvil\ForgeClosureNotFoundException
      */
     public function run(
         $data,
@@ -41,7 +44,7 @@ final class UpdateField extends AbstractFieldAction
         bool $clear_unset_data_keys = false
     ): bool
     {
-        $validate = $this->getValidateAction(
+        $validate = FieldTypes::getValidateAction(
             $type ?? $this->field->getData('type')
         );
 

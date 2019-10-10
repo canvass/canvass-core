@@ -1,11 +1,10 @@
 <?php
 
-namespace Canvass\Action\Validation\FormField;
+namespace Canvass\Field\Tel;
 
-use Canvass\Support\FieldData;
-use Canvass\Support\Validation\Builder;
+use Canvass\Contract\FieldData;
 
-final class ValidateTelField extends AbstractValidateInputField
+final class Validation extends \Canvass\Field\AbstractField\Input\Validation
 {
     protected $attributes_validation_rules = [
         'required' => ['required' => false,],
@@ -20,10 +19,7 @@ final class ValidateTelField extends AbstractValidateInputField
         FieldData $field,
         array &$rules
     ) {
-        AbstractValidateInputField::populateTextBasedFieldRules(
-            $field,
-            $rules
-        );
+        self::populateTextBasedFieldRules($field, $rules);
     }
 
     public function convertAttributesData($attributes): array

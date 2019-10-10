@@ -2,6 +2,7 @@
 
 namespace Canvass\Support;
 
+use Canvass\Contract\FieldDataRetrievable;
 use Canvass\Forge;
 
 /**
@@ -13,7 +14,7 @@ use Canvass\Forge;
 trait PreparesFormData
 {
     /**
-     * @return \Canvass\Support\FieldData[]
+     * @return \Canvass\Contract\FieldData[]
      */
     public function getNestedFields(): array
     {
@@ -22,7 +23,11 @@ trait PreparesFormData
         $nested = [];
 
         foreach ($fields as $field) {
-            $data = new FieldData($field);
+            $data = Forge::fieldData($field);
+
+            if ($data instanceof FieldDataRetrievable) {
+                $data->retrieveAdditionalData();
+            }
 
             $level = $field['parent_id'] > 0 ? $field['parent_id'] : $field['id'];
             

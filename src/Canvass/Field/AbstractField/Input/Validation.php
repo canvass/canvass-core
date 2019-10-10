@@ -1,11 +1,12 @@
 <?php
 
-namespace Canvass\Action\Validation\FormField;
+namespace Canvass\Field\AbstractField\Input;
 
-use Canvass\Support\FieldData;
+use Canvass\Field\AbstractField\AbstractValidateFieldAction;
+use Canvass\Contract\FieldData;
 use Canvass\Support\Validation\Builder;
 
-abstract class AbstractValidateInputField extends AbstractValidateFieldAction
+abstract class Validation extends AbstractValidateFieldAction
 {
     public static function getValidationKeysWithRequiredValue(): array
     {
@@ -14,6 +15,14 @@ abstract class AbstractValidateInputField extends AbstractValidateFieldAction
             'label' => true,
             'identifier' => true,
         ];
+    }
+
+    public function populateValidationRulesFromFieldData(
+        FieldData $field,
+        array &$rules
+    )
+    {
+        self::populateTextBasedFieldRules($field, $rules);
     }
 
     public static function populateTextBasedFieldRules(
@@ -33,6 +42,9 @@ abstract class AbstractValidateInputField extends AbstractValidateFieldAction
             $builder->maxLength($field->getAttribute('maxlength'));
         }
 
-        $rules[$field['name']] = $builder->build();
+        $rules[$field['name']] = [
+            'field' => $field,
+            'rules' => $builder->build()
+        ];
     }
 }

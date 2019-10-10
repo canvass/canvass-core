@@ -1,11 +1,11 @@
 <?php
 
-namespace Canvass\Action\Validation\FormField;
+namespace Canvass\Field\Time;
 
-use Canvass\Support\FieldData;
+use Canvass\Contract\FieldData;
 use Canvass\Support\Validation\Builder;
 
-final class ValidateTimeField extends AbstractValidateInputField
+final class Validation extends \Canvass\Field\AbstractField\Input\Validation
 {
     protected $attributes_validation_rules = [
         'required' => ['required' => false,],
@@ -37,7 +37,10 @@ final class ValidateTimeField extends AbstractValidateInputField
             $builder->maxTime($field->getAttribute('max'));
         }
 
-        $rules[$field['name']] = $builder->build();
+        $rules[$field['name']] = [
+            'field' => $field,
+            'rules' => $builder->build()
+        ];
     }
 
     public function convertAttributesData($attributes): array

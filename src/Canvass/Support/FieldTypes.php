@@ -2,10 +2,10 @@
 
 namespace Canvass\Support;
 
-use Canvass\Action\Validation\FormField\AbstractValidateFieldAction;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
 use Canvass\Exception\InvalidValidationData;
+use Canvass\Field\AbstractField\AbstractValidateFieldAction;
 use Canvass\Forge;
 
 final class FieldTypes
@@ -33,6 +33,8 @@ final class FieldTypes
         'radio-group' => 'group',
         'fieldset' => 'fieldset',
         'divider' => 'divider',
+        'columns' => 'columns',
+        'column' => 'column',
     ];
 
     public static function get(bool $just_keys = false): array
@@ -45,6 +47,8 @@ final class FieldTypes
             'group' => 'Radio/Checkbox Group',
             'fieldset' => 'Fieldset',
             'divider' => 'Divider',
+            'columns' => 'Columns',
+            'column' => 'Column'
         ];
 
         if ($just_keys) {
@@ -88,11 +92,10 @@ final class FieldTypes
     {
         return [
             'text' => 'Generic Text',
-            'date' => 'Date',
+            'tel' => 'Phone Number',
             'email' => 'Email Address',
             'number' => 'Number',
-//            'search' => 'Search Box',
-            'tel' => 'Phone Number',
+            'date' => 'Date',
             'time' => 'Time',
             'url' => 'Url',
         ];
@@ -101,10 +104,11 @@ final class FieldTypes
     /**
      * @param string $type
      * @param string|null $alternate_type
-     * @param \Canvass\Contract\Validate $validator
-     * @param \Canvass\Contract\ValidationMap $validation_map
-     * @return \Canvass\Action\Validation\FormField\AbstractValidateFieldAction
+     * @param \Canvass\Contract\Validate|null $validator
+     * @param \Canvass\Contract\ValidationMap|null $validation_map
+     * @return \Canvass\Field\AbstractField\AbstractValidateFieldAction
      * @throws \Canvass\Exception\InvalidValidationData
+     * @throws \WebAnvil\ForgeClosureNotFoundException
      */
     public static function getValidateAction(
         string $type,
@@ -128,16 +132,20 @@ final class FieldTypes
 
     public static function getValidateActionClassName(string $type): string
     {
-        $ucType = ucfirst(strtolower($type));
+        $paths = array_reverse(Forge::getFieldPaths());
+        
+        $ucType = ucfirst(Str::camelCase($type));
 
-        $class = "\Canvass\Action\Validation\FormField\Validate{$ucType}Field";
+        foreach ($paths as $path_set) {
+            $class = "{$path_set['namespace']}\\{$ucType}\Validation";
 
-        if (! class_exists($class)) {
-            throw new InvalidValidationData(
-                'There is no validation action for ' . $type
-            );
+            if (class_exists($class)) {
+                return $class;
+            }
         }
 
-        return $class;
+        throw new InvalidValidationData(
+            'There is no validation action for ' . $type
+        );
     }
 }

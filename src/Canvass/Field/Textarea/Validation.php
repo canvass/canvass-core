@@ -1,11 +1,10 @@
 <?php
 
-namespace Canvass\Action\Validation\FormField;
+namespace Canvass\Field\Textarea;
 
-use Canvass\Support\FieldData;
-use Canvass\Support\Validation\Builder;
+use Canvass\Contract\FieldData;
 
-final class ValidateTextareaField extends AbstractValidateFieldAction
+final class Validation extends \Canvass\Field\AbstractField\Input\Validation
 {
     private const WRAP_VALUES = ['hard', 'soft', 'off'];
 
@@ -24,7 +23,7 @@ final class ValidateTextareaField extends AbstractValidateFieldAction
         array &$rules
     )
     {
-        AbstractValidateInputField::populateTextBasedFieldRules(
+        self::populateTextBasedFieldRules(
             $field,
             $rules
         );

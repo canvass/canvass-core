@@ -1,11 +1,8 @@
 <?php
 
-namespace Canvass\Action\Validation\FormField;
+namespace Canvass\Field\Text;
 
-use Canvass\Support\FieldData;
-use Canvass\Support\Validation\Builder;
-
-final class ValidateTextField extends AbstractValidateInputField
+final class Validation extends \Canvass\Field\AbstractField\Input\Validation
 {
     protected $attributes_validation_rules = [
         'required' => ['required' => false,],
@@ -13,17 +10,6 @@ final class ValidateTextField extends AbstractValidateInputField
         'maxlength' => ['required' => false, 'numeric' => true,],
         'placeholder' => ['required' => false, 'max_length' => 160,],
     ];
-
-    public function populateValidationRulesFromFieldData(
-        FieldData $field,
-        array &$rules
-    )
-    {
-        AbstractValidateInputField::populateTextBasedFieldRules(
-            $field,
-            $rules
-        );
-    }
 
     public function convertAttributesData($attributes): array
     {

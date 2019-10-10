@@ -38,6 +38,7 @@ final class CreateField extends AbstractFieldAction
      * @param int $sort
      * @return bool
      * @throws \Canvass\Exception\InvalidValidationData
+     * @throws \WebAnvil\ForgeClosureNotFoundException
      */
     public function run($data, string $type, int $sort): bool
     {

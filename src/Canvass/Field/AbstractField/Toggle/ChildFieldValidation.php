@@ -1,11 +1,12 @@
 <?php
 
-namespace Canvass\Action\Validation\FormField;
+namespace Canvass\Field\AbstractField\Toggle;
 
-use Canvass\Support\FieldData;
+use Canvass\Contract\FieldData;
 use Canvass\Support\Validation\Builder;
 
-abstract class AbstractValidateToggleChildField extends AbstractValidateFieldAction
+abstract class ChildFieldValidation
+    extends \Canvass\Field\AbstractField\AbstractValidateFieldAction
 {
     protected $attributes_validation_rules = [
         'checked' => ['checked' => false,],

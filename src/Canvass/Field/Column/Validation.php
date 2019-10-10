@@ -1,17 +1,27 @@
 <?php
 
-namespace Canvass\Action\Validation\FormField;
+namespace Canvass\Field\Column;
 
-use Canvass\Support\FieldData;
+use Canvass\Field\AbstractField\AbstractValidateFieldAction;
+use Canvass\Contract\FieldData;
 use Canvass\Support\FieldTypes;
 
-class ValidateFieldsetField extends AbstractValidateFieldAction
+final class Validation extends AbstractValidateFieldAction
 {
+    public static function getValidationKeysWithRequiredValue(): array
+    {
+        return [
+            'identifier' => true,
+            'classes' => false,
+        ];
+    }
+
     public function populateValidationRulesFromFieldData(
-        FieldData $fieldset,
+        FieldData $column,
         array &$rules
-    ) {
-        foreach ($fieldset['children'] as $field) {
+    )
+    {
+        foreach ($column['children'] as $field) {
             /** @var \Canvass\Action\Validation\FormField\AbstractValidateFieldAction $validator */
             $validator = FieldTypes::getValidateAction(
                 $field['type'],

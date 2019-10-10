@@ -1,47 +1,37 @@
 <?php
 
-namespace Canvass\Action\Validation\FormField;
+namespace Canvass\Field\Url;
 
-use Canvass\Support\FieldData;
-use Canvass\Support\Validation\Builder;
-
-final class ValidateEmailField extends AbstractValidateInputField
+final class Validation extends \Canvass\Field\AbstractField\Input\Validation
 {
     protected $attributes_validation_rules = [
         'required' => ['required' => false,],
-        'placeholder' => [
-            'required' => false, 'allow_null' => true, 'data_type' => 'string',
-        ],
         'minlength' => ['required' => false, 'numeric' => true,],
         'maxlength' => ['required' => false, 'numeric' => true,],
-        'multiple' => [
-            'required' => false, 'allow_null' => true, 'data_type' => 'bool',
-        ],
+        'placeholder' => ['required' => false, 'max_length' => 160,],
     ];
 
-    public function populateValidationRulesFromFieldData(
-        FieldData $field,
-        array &$rules
-    )
+    public static function getValidationKeysWithRequiredValue(): array
     {
-        AbstractValidateInputField::populateTextBasedFieldRules(
-            $field,
-            $rules
-        );
+        return [
+            'name' => true,
+            'label' => true,
+            'identifier' => true,
+        ];
     }
 
     public function convertAttributesData($attributes): array
     {
         $return = [];
-        
+
         if (! empty($attributes['required'])) {
             $return['required'] = 'required';
         }
-        
+
         if (! empty($attributes['placeholder'])) {
             $return['placeholder'] = $attributes['placeholder'];
         }
-        
+
         if (! empty($attributes['minlength'])) {
             $return['minlength'] = (int) $attributes['minlength'];
         }
@@ -50,10 +40,6 @@ final class ValidateEmailField extends AbstractValidateInputField
             $return['maxlength'] = (int) $attributes['maxlength'];
         }
 
-        if (! empty($attributes['multiple'])) {
-            $return['multiple'] = true;
-        }
-        
         return $return;
     }
 }
