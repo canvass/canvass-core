@@ -3,6 +3,7 @@
 namespace Canvass\Field\Fieldset;
 
 use Canvass\Contract\FieldData;
+use Canvass\Support\FieldTypes;
 
 final class Validation extends \Canvass\Field\AbstractField\Input\Validation
 {

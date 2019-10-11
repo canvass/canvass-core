@@ -18,6 +18,15 @@ final class ValidateUserSubmission extends AbstractValidateDataAction
     /** @var array */
     private $validation = [];
 
+    /**
+     * ValidateUserSubmission constructor.
+     * @param $form_id
+     * @param null $owner_id
+     * @param null $validator
+     * @param null $validationConverter
+     * @throws \Canvass\Exception\InvalidValidationData
+     * @throws \WebAnvil\ForgeClosureNotFoundException
+     */
     public function __construct(
         $form_id,
         $owner_id = null,
@@ -42,6 +51,10 @@ final class ValidateUserSubmission extends AbstractValidateDataAction
         $this->populateValidationRules();
     }
 
+    /**
+     * @throws \Canvass\Exception\InvalidValidationData
+     * @throws \WebAnvil\ForgeClosureNotFoundException
+     */
     public function populateValidationRules()
     {
         foreach ($this->fields as $field) {

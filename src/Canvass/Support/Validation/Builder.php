@@ -145,7 +145,7 @@ class Builder
         return $this;
     }
 
-    public function timeFormat(string $format = 'H:i:s'): self
+    public function timeFormat(string $format = 'H:i'): self
     {
         return $this->dateFormat($format);
     }

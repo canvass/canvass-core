@@ -17,8 +17,8 @@ final class Validation extends \Canvass\Field\AbstractField\Input\Validation
             'numeric' => true,
             'max_length' => 86400, // 24 hours in seconds
         ],
-        'min' => ['required' => false, 'date_format' => 'H:i:s',],
-        'max' => ['required' => false, 'date_format' => 'H:i:s',],
+        'min' => ['required' => false, 'date_format' => 'H:i',],
+        'max' => ['required' => false, 'date_format' => 'H:i',],
     ];
 
     public function populateValidationRulesFromFieldData(
