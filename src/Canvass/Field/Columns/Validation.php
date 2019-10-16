@@ -2,9 +2,9 @@
 
 namespace Canvass\Field\Columns;
 
-use Canvass\Field\AbstractField\AbstractValidateFieldAction;
 use Canvass\Contract\FieldData;
 use Canvass\Support\FieldTypes;
+use Canvass\Field\AbstractField\AbstractValidateFieldAction;
 
 final class Validation extends AbstractValidateFieldAction
 {

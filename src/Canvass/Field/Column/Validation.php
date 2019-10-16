@@ -13,6 +13,7 @@ final class Validation extends AbstractValidateFieldAction
         return [
             'identifier' => true,
             'classes' => false,
+            'help_text' => false,
         ];
     }
 

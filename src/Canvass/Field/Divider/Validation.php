@@ -3,14 +3,17 @@
 namespace Canvass\Field\Divider;
 
 use Canvass\Contract\FieldData;
+use Canvass\Field\AbstractField\AbstractValidateFieldAction;
 
-final class Validation extends \Canvass\Field\AbstractField\Input\Validation
+final class Validation extends AbstractValidateFieldAction
 {
     public static function getValidationKeysWithRequiredValue(): array
     {
         return [
             'identifier' => true,
-            'classes' => false
+            'classes' => false,
+            'label' => false,
+            'help_text' => false,
         ];
     }
 
