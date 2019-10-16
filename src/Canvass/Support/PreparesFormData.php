@@ -19,8 +19,10 @@ trait PreparesFormData
     public function getNestedFields(): array
     {
         $fields = $this->findFields();
-        
+
         $nested = [];
+
+        $map = [];
 
         foreach ($fields as $field) {
             $data = Forge::fieldData($field);
@@ -29,12 +31,18 @@ trait PreparesFormData
                 $data->retrieveAdditionalData();
             }
 
-            $level = $field['parent_id'] > 0 ? $field['parent_id'] : $field['id'];
-            
-            if (empty($nested[$level])) {
-                $nested[$level] = $data;
-            } else {
-                $nested[$level]->addNestedField($data);
+            $map[$field['id']] = $data;
+
+            if ($field['parent_id'] > 0) {
+                $map[$field['parent_id']]->addNestedField($data);
+            }
+        }
+
+        foreach ($map as $item) {
+            if (0 === $item['parent_id']) {
+                $level = $item['parent_id'] > 0 ? $item['parent_id'] : $item['id'];
+
+                $nested[$level] = $item;
             }
         }
 
