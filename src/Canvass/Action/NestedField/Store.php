@@ -2,7 +2,7 @@
 
 namespace Canvass\Action\NestedField;
 
-use Canvass\Action\FormField\CreateChildField;
+use Canvass\Action\CommonField\StoreField;
 use Canvass\Contract\Action;
 use Canvass\Contract\FieldAction;
 use Canvass\Contract\NestedFieldAction;
@@ -15,6 +15,16 @@ final class Store implements Action, FieldAction, NestedFieldAction
     /** @var \Canvass\Contract\FormFieldModel */
     private $parent;
 
+    /**
+     * @param int $form_id
+     * @param int $field_id
+     * @param int $sort
+     * @param string $type
+     * @param array|null $data
+     * @return mixed
+     * @throws \Canvass\Exception\InvalidValidationData
+     * @throws \WebAnvil\ForgeClosureNotFoundException
+     */
     public function __invoke(
         int $form_id,
         int $field_id,
@@ -40,12 +50,11 @@ final class Store implements Action, FieldAction, NestedFieldAction
 
         $field->setData('parent_id', $this->parent->getId());
 
-        $create = new CreateChildField(
+        $create = new StoreField(
             $this->form,
             $field,
-            $this->parent,
             Forge::validator(),
-            null,
+            Forge::getOwnerId(),
             Forge::validationMap()
         );
 

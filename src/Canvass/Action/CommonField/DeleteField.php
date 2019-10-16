@@ -1,6 +1,8 @@
 <?php
 
-namespace Canvass\Action\FormField;
+namespace Canvass\Action\CommonField;
+
+use Canvass\Action\CommonField\AbstractFieldAction;
 
 final class DeleteField extends AbstractFieldAction
 {

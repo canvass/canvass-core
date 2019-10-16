@@ -1,7 +1,8 @@
 <?php
 
-namespace Canvass\Action\FormField;
+namespace Canvass\Action\CommonField;
 
+use Canvass\Action\CommonField\AbstractFieldAction;
 use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 use Canvass\Contract\Validate;

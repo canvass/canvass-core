@@ -2,6 +2,7 @@
 
 namespace Canvass\Action\FormField;
 
+use Canvass\Action\CommonField\DeleteField;
 use Canvass\Contract\Action;
 use Canvass\Contract\FieldAction;
 use Canvass\Forge;

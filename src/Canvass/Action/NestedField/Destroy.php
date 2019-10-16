@@ -2,7 +2,7 @@
 
 namespace Canvass\Action\NestedField;
 
-use Canvass\Action\FormField\DeleteField;
+use Canvass\Action\CommonField\DeleteField;
 use Canvass\Contract\Action;
 use Canvass\Contract\FieldAction;
 use Canvass\Contract\NestedFieldAction;

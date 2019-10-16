@@ -1,6 +1,6 @@
 <?php
 
-namespace Canvass\Action\FormField;
+namespace Canvass\Action\CommonField;
 
 use Canvass\Contract\Action;
 use Canvass\Contract\FieldAction;

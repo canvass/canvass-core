@@ -2,7 +2,7 @@
 
 namespace Canvass\Action\NestedField;
 
-use Canvass\Action\FormField\UpdateField;
+use Canvass\Action\CommonField\UpdateField;
 use Canvass\Contract\Action;
 use Canvass\Contract\FieldAction;
 use Canvass\Contract\NestedFieldAction;
