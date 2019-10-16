@@ -36,12 +36,18 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
         ];
     }
 
+    /**
+     * @return array
+     * @throws \Canvass\Exception\InvalidValidationData
+     */
     public function getValidationRules(): array
     {
         $rules = [];
 
-        foreach (static::getValidationKeysWithRequiredValue() as $rule => $required) {
-            $rules = array_merge($rules, $this->getRule($rule, $required));
+        foreach (static::getValidationKeysWithRequiredValue() as $rule_name => $required) {
+            $rules[$rule_name] = [
+                'rules' => $this->getRule($rule_name, $required)
+            ];
         }
 
         return $rules;
@@ -73,7 +79,7 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
             $rules['allow_null'] = true;
         }
 
-        return [$name => $rules];
+        return $rules;
     }
 
     public function validateAttributes($attributes): bool

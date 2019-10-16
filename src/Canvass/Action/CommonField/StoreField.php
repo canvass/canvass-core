@@ -2,13 +2,10 @@
 
 namespace Canvass\Action\CommonField;
 
-use Canvass\Action\CommonField\AbstractFieldAction;
-use Canvass\Action\Validation\FormField\AbstractValidateFieldAction;
 use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
-use Canvass\Exception\InvalidValidationData;
 use Canvass\Support\FieldTypes;
 
 final class StoreField extends AbstractFieldAction
@@ -49,11 +46,7 @@ final class StoreField extends AbstractFieldAction
         unset($data['attributes']);
 
         $validate = FieldTypes::getValidateAction($type, $general_type);
-//echo __FILE__ . ' on line ' . __LINE__;
-//echo '<pre style="background: white; width: 1000px;">' . PHP_EOL;
-//print_r(get_class($validate));
-//echo PHP_EOL . '</pre>' . PHP_EOL;
-//exit;
+
         if (! $validate->validate($data)) {
             return false;
         }
