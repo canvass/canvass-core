@@ -14,6 +14,8 @@ abstract class Validation extends AbstractValidateFieldAction
             'name' => true,
             'label' => true,
             'identifier' => true,
+            'classes' => false,
+            'wrap_classes' => false,
         ];
     }
 

@@ -42,6 +42,8 @@ final class Validation extends \Canvass\Field\AbstractField\Input\Validation
             'label' => true,
             'identifier' => true,
             'type' => true,
+            'classes' => false,
+            'wrap_classes' => false,
         ];
     }
 

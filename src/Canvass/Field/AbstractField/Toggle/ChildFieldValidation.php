@@ -29,6 +29,8 @@ abstract class ChildFieldValidation
             'label' => true,
             'identifier' => true,
             'value' => true,
+            'classes' => false,
+            'wrap_classes' => false,
         ];
     }
 

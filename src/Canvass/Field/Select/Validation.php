@@ -37,6 +37,7 @@ final class Validation extends AbstractValidateFieldAction
             'label' => true,
             'identifier' => true,
             'classes' => false,
+            'wrap_classes' => false,
         ];
     }
 
