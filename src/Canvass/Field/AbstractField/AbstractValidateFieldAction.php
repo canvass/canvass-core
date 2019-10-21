@@ -28,6 +28,7 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
             'label' => $rules_160,
             'identifier' => $rules_160,
             'classes' => $rules_160,
+            'wrap_classes' => $rules_160,
             'type' => $rules_160,
             'general_type' => $rules_160,
             'value' => $rules_160,
