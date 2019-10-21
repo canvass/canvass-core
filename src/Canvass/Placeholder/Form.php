@@ -17,6 +17,11 @@ class Form implements FormModel
         return [new self()];
     }
 
+    public function findField($field_id)
+    {
+        return new FormField();
+    }
+
     public function findFieldWithSortOf(
         int $sort,
         $parent_id = 0

@@ -12,7 +12,7 @@ final class Validation extends \Canvass\Field\AbstractField\AbstractValidateFiel
         return [
             'label' => true,
             'identifier' => false,
-            'classes' => false,
+            'wrap_classes' => false,
         ];
     }
 
