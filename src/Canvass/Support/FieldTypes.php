@@ -80,9 +80,12 @@ final class FieldTypes
     public static function getGeneralTypeFromType(string $type): string
     {
         if (empty(self::GENERAL_TYPES_MAP[$type])) {
-            throw new InvalidValidationData(
-                "{$type} is not in accepted types list"
-            );
+            $class = self::getClassName($type, 'field type');
+
+            /** @var \Canvass\Contract\FieldType $field_type */
+            $field_type = new $class();
+
+            return $field_type->getGeneralType();
         }
 
         return self::GENERAL_TYPES_MAP[$type];
@@ -118,9 +121,9 @@ final class FieldTypes
     ): AbstractValidateFieldAction
     {
         try {
-            $class = self::getValidateActionClassName($type);
+            $class = self::getClassName($type, 'Validation');
         } catch (InvalidValidationData $e) {
-            $class = self::getValidateActionClassName($alternate_type);
+            $class = self::getClassName($alternate_type, 'Validation');
         }
 
         /** @var \Canvass\Action\Validation\AbstractValidateDataAction $validate */
@@ -132,12 +135,19 @@ final class FieldTypes
 
     public static function getValidateActionClassName(string $type): string
     {
+        return self::getClassName($type, 'Validation');
+    }
+
+    public static function getClassName(string $type, string $suffix): string
+    {
         $paths = array_reverse(Forge::getFieldPaths());
-        
-        $ucType = ucfirst(Str::camelCase($type));
+
+        $ucType = Str::classSegment($type);
+
+        $ucSuffix = Str::classSegment($suffix);
 
         foreach ($paths as $path_set) {
-            $class = "{$path_set['namespace']}\\{$ucType}\Validation";
+            $class = "{$path_set['namespace']}\\{$ucType}\\{$ucSuffix}";
 
             if (class_exists($class)) {
                 return $class;
@@ -145,7 +155,7 @@ final class FieldTypes
         }
 
         throw new InvalidValidationData(
-            'There is no validation action for ' . $type
+            "There is no {$suffix} for {$type}"
         );
     }
 }

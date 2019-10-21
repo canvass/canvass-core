@@ -50,4 +50,8 @@ interface FormFieldModel
      * @param  mixed  $value
      * @return mixed */
     public function setDataToAttributes($key, $value);
+
+    public function getFormModel(): FormModel;
+
+    public function setFormModel(FormModel $form_model): void;
 }

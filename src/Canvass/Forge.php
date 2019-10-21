@@ -9,10 +9,12 @@ use Canvass\Contract\FormModel;
 use Canvass\Contract\Response;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
+use Canvass\Exception\InvalidValidationData;
 use Canvass\Placeholder\Form as EmptyForm;
 use Canvass\Placeholder\FormField as EmptyField;
 use Canvass\Placeholder\Response as EmptyResponse;
 use Canvass\Placeholder\Validate as EmptyValidate;
+use Canvass\Support\FieldTypes;
 use Canvass\Support\Str;
 use WebAnvil\ForgeClosureNotFoundException;
 
@@ -57,18 +59,19 @@ final class Forge extends \WebAnvil\Forge
     {
         $type = $field->getData('type');
 
-        if (null !== ($class = self::fieldDataClass($type))) {
+        try {
+            $class = FieldTypes::getClassName($type, 'FieldData');
+
             return new $class($field);
-        }
+        } catch (InvalidValidationData $ignore) {}
 
         $general_type = $field->getData('general_type');
 
-        if (
-            null !== $general_type &&
-            (null !== ($class = self::fieldDataClass($general_type)))
-        ) {
+        try {
+            $class = FieldTypes::getClassName($general_type, 'FieldData');
+
             return new $class($field);
-        }
+        } catch (InvalidValidationData $ignore) {}
 
         return new \Canvass\Support\FieldData($field);
     }
@@ -77,7 +80,7 @@ final class Forge extends \WebAnvil\Forge
     {
         $paths = array_reverse(self::getFieldPaths());
         
-        $type = ucfirst(Str::camelCase($type));
+        $type = ucfirst(Str::classSegment($type));
 
         foreach ($paths as $path_set) {
             $class = "{$path_set['namespace']}\\{$type}\\FieldData";
@@ -239,10 +242,10 @@ final class Forge extends \WebAnvil\Forge
     public static function setBaseUrlSegment(string $segment): void
     {
         self::$base_url_segment =
-            '/' . trim($segment, '/ \t\n\r\0\x0B') . '/';
+            '/' . trim($segment, "/ \t\n\r\0\x0B") . '/';
     }
 
-    public static function addFieldPaths(string $path, string $namespace): void
+    public static function addFieldPath(string $path, string $namespace): void
     {
         self::$field_paths[] = ['namespace' => $namespace, 'path' => $path];
     }

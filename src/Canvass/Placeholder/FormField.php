@@ -3,6 +3,7 @@
 namespace Canvass\Placeholder;
 
 use Canvass\Contract\FormFieldModel;
+use Canvass\Contract\FormModel;
 
 class FormField implements FormFieldModel
 {
@@ -36,7 +37,7 @@ class FormField implements FormFieldModel
         return;
     }
 
-    public function find($id)
+    public function find($id, $owner_id = null)
     {
         return new self();
     }
@@ -62,6 +63,21 @@ class FormField implements FormFieldModel
     }
 
     public function setData($key, $value)
+    {
+        return;
+    }
+
+    public function hasAttribute($key): bool
+    {
+        return false;
+    }
+
+    public function getFormModel(): FormModel
+    {
+        return new Form();
+    }
+
+    public function setFormModel(FormModel $form_model): void
     {
         return;
     }
