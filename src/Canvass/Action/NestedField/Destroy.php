@@ -6,6 +6,7 @@ use Canvass\Action\CommonField\DeleteField;
 use Canvass\Contract\Action;
 use Canvass\Contract\FieldAction;
 use Canvass\Contract\NestedFieldAction;
+use Canvass\Exception\DeleteFailedException;
 use Canvass\Forge;
 
 final class Destroy implements Action, FieldAction, NestedFieldAction
@@ -17,34 +18,46 @@ final class Destroy implements Action, FieldAction, NestedFieldAction
 
     public function __invoke(int $form_id, int $parent_id, int $field_id)
     {
-        $this->form = \Canvass\Forge::form()->find($form_id, Forge::getOwnerId());
+        $this->form = Forge::form()->find($form_id, Forge::getOwnerId());
 
         $this->parent = $this->form->findField($parent_id);
 
         /** @var \Canvass\Contract\FormFieldModel $field */
-        $field = \Canvass\Forge::field()->find($field_id);
+        $field = Forge::field()->find($field_id);
 
-        $destroyer = new DeleteField($this->form, $field, null);
+        $destroyer = new DeleteField($this->form, $field, Forge::getOwnerId());
 
-        try {
-            $destroyed = $destroyer->run();
-        } catch (\Throwable $e) {
-            Forge::logThrowable($e);
-
-            $destroyed = false;
-        }
+        $destroyed = $destroyer->run();
 
         if (! $destroyed) {
-            return Forge::error(
-                'Could not delete parent field for unknown reasons.',
-                $this
+            throw new DeleteFailedException(
+                'Could not delete field for unknown reasons.'
+            );
+        }
+
+        $fields = $field->retrieveChildren();
+
+        $not_deleted = [];
+
+        foreach ($fields as $child) {
+            $deleted = $child->delete();
+
+            if (! $deleted) {
+                $not_deleted[] = $field;
+            }
+        }
+
+        if (count($not_deleted)) {
+            throw new DeleteFailedException(
+                'Deleted field but could not delete all of its nested fields.'
             );
         }
 
         return Forge::success(
             sprintf(
-                'Field field, %s, has been deleted.',
-                $field->getData('label') ?? $field->getData('identifier')
+                'Field, %s, has been deleted.',
+                $field->getData('label') ??
+                    $field->getData('identifier')
             ),
             $this
         );

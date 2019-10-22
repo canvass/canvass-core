@@ -5,6 +5,7 @@ namespace Canvass\Action\FormField;
 use Canvass\Action\CommonField\DeleteField;
 use Canvass\Contract\Action;
 use Canvass\Contract\FieldAction;
+use Canvass\Exception\DeleteFailedException;
 use Canvass\Forge;
 
 final class Destroy implements Action, FieldAction
@@ -18,20 +19,31 @@ final class Destroy implements Action, FieldAction
 
         $field = $this->form->findField($field_id);
 
-        $destroyer = new DeleteField($this->form, $field, null);
+        $destroyer = new DeleteField($this->form, $field, Forge::getOwnerId());
 
-        try {
-            $destroyed = $destroyer->run();
-        } catch (\Throwable $e) {
-            Forge::logThrowable($e);
-
-            $destroyed = false;
-        }
+        $destroyed = $destroyer->run();
 
         if (! $destroyed) {
-            return Forge::error(
-                'Could not delete field for unknown reasons.',
-                $this
+            throw new DeleteFailedException(
+                'Could not delete field for unknown reasons.'
+            );
+        }
+
+        $fields = $field->retrieveChildren();
+
+        $not_deleted = [];
+
+        foreach ($fields as $child) {
+            $deleted = $child->delete();
+
+            if (! $deleted) {
+                $not_deleted[] = $field;
+            }
+        }
+
+        if (count($not_deleted)) {
+            throw new DeleteFailedException(
+                'Deleted field but could not delete all of its nested fields.'
             );
         }
 

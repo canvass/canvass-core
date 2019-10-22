@@ -4,6 +4,7 @@ namespace Canvass\Action\Form;
 
 use Canvass\Contract\Action;
 use Canvass\Contract\FieldAction;
+use Canvass\Exception\DeleteFailedException;
 use Canvass\Forge;
 
 class Destroy implements Action, FieldAction
@@ -15,18 +16,29 @@ class Destroy implements Action, FieldAction
     {
         $this->form = Forge::form()->find($form_id, Forge::getOwnerId());
 
-        try {
-            $destroyed = $this->form->delete();
-        } catch (\Throwable $e) {
-            Forge::logThrowable($e);
-
-            $destroyed = false;
-        }
+        $destroyed = $this->form->delete();
 
         if (! $destroyed) {
-            return Forge::error(
-                'Could not delete form for unknown reasons.',
-                $this
+            throw new DeleteFailedException(
+                'Could not delete form for unknown reasons.'
+            );
+        }
+
+        $fields = $this->form->findFields();
+
+        $not_deleted = [];
+
+        foreach ($fields as $field) {
+            $deleted = $field->delete();
+
+            if (! $deleted) {
+                $not_deleted[] = $field;
+            }
+        }
+
+        if (count($not_deleted)) {
+            throw new DeleteFailedException(
+                'Deleted form, but could not delete all of form\'s field.'
             );
         }
 
