@@ -26,6 +26,7 @@ abstract class ChildFieldValidation
     public static function getValidationKeysWithRequiredValue(): array
     {
         return [
+            'name' => true,
             'label' => true,
             'identifier' => true,
             'value' => true,

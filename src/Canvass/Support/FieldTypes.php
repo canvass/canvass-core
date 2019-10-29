@@ -29,6 +29,7 @@ final class FieldTypes
         'option' => 'option',
         'checkbox' => 'checkbox',
         'radio' => 'radio',
+        'group' => 'group',
         'checkbox-group' => 'group',
         'radio-group' => 'group',
         'fieldset' => 'fieldset',

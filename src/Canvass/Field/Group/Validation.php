@@ -3,9 +3,10 @@
 namespace Canvass\Field\Group;
 
 use Canvass\Contract\FieldData;
+use Canvass\Field\AbstractField\AbstractValidateFieldAction;
 use Canvass\Support\Validation\Builder;
 
-final class Validation extends \Canvass\Field\AbstractField\Input\Validation
+class Validation extends AbstractValidateFieldAction
 {
     protected $attributes_validation_rules = [
         'required' => ['required' => false,],
@@ -41,9 +42,10 @@ final class Validation extends \Canvass\Field\AbstractField\Input\Validation
             'name' => true,
             'label' => true,
             'identifier' => true,
-            'type' => true,
+            'type' => false,
             'classes' => false,
             'wrap_classes' => false,
+            'help_text' => false,
         ];
     }
 

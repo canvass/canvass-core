@@ -16,7 +16,7 @@ class Store implements Action, FieldAction
     {
         if (null === $data) {
             $data = Forge::requestData([
-                'name', 'introduction', 'redirect_url',
+                'name', 'display_name', 'introduction', 'redirect_url',
                 'identifier', 'classes', 'button_text', 'button_classes'
             ]);
         }

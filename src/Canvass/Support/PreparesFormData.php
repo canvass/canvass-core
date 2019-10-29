@@ -39,10 +39,11 @@ trait PreparesFormData
         }
 
         foreach ($map as $item) {
-            if (0 === $item['parent_id']) {
-                $level = $item['parent_id'] > 0 ? $item['parent_id'] : $item['id'];
+            $item_id = $item['meta']['id'] ?? $item['id'];
+            $parent_id = $item['meta']['parent_id'] ?? $item['parent_id'];
 
-                $nested[$level] = $item;
+            if (0 === (int) $parent_id) {
+                $nested[$item_id] = $item;
             }
         }
 
