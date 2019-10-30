@@ -53,7 +53,7 @@ final class UpdateField extends AbstractFieldAction
             return false;
         }
 
-        foreach (array_keys($validate::getValidationKeysWithRequiredValue()) as $key) {
+        foreach (array_keys($validate->getDataColumnsMatchedWithRequiredBoolean()) as $key) {
             if (isset($data[$key])) {
                 $this->field->setData($key, $data[$key]);
             } elseif ($clear_unset_data_keys) {

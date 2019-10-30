@@ -3,13 +3,13 @@
 namespace Canvass\Field\AbstractField;
 
 use Canvass\Action\Validation\AbstractValidateDataAction;
-use Canvass\Action\Validation\FormField\InterfaceValidateField;
+use Canvass\Contract\ValidateFieldAction;
 use Canvass\Exception\InvalidValidationData;
 use Canvass\Contract\FieldData;
 use Canvass\Support\Validation\Builder;
 
 abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
-    implements InterfaceValidateField
+    implements ValidateFieldAction
 {
     private $rules;
     /** @var array */
@@ -45,9 +45,9 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
     {
         $rules = [];
 
-        foreach (static::getValidationKeysWithRequiredValue() as $rule_name => $required) {
+        foreach ($this->getDataColumnsMatchedWithRequiredBoolean() as $rule_name => $is_required) {
             $rules[$rule_name] = [
-                'rules' => $this->getRule($rule_name, $required)
+                'rules' => $this->getRule($rule_name, $is_required)
             ];
         }
 
@@ -59,29 +59,14 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
         array &$rules
     );
 
-    public static function getValidationKeysWithRequiredValue()
-    {
-        return [];
-    }
-
-    protected function getRule($name, bool $required): array
-    {
-        if (empty($this->rules[$name])) {
-            throw new InvalidValidationData(
-                "Could not find rules for {$name}"
-            );
-        }
-
-        $rules = $this->rules[$name];
-
-        $rules['required'] = $required;
-
-        if (! $required) {
-            $rules['allow_null'] = true;
-        }
-
-        return $rules;
-    }
+    /**
+     * Returns an array of the columns that the field uses.
+     *
+     * The array's keys are the columns used and the array values are whether the column is required (true) or optional (false).
+     *
+     * @return array
+     */
+    abstract public function getDataColumnsMatchedWithRequiredBoolean(): array;
 
     public function validateAttributes($attributes): bool
     {
@@ -105,5 +90,24 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
     public function convertAttributesData($attributes): array
     {
         return [];
+    }
+
+    protected function getRule($name, bool $required): array
+    {
+        if (empty($this->rules[$name])) {
+            throw new InvalidValidationData(
+                "Could not find rules for {$name}"
+            );
+        }
+
+        $rules = $this->rules[$name];
+
+        $rules['required'] = $required;
+
+        if (! $required) {
+            $rules['allow_null'] = true;
+        }
+
+        return $rules;
     }
 }

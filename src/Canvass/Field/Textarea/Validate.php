@@ -2,9 +2,7 @@
 
 namespace Canvass\Field\Textarea;
 
-use Canvass\Contract\FieldData;
-
-final class Validation extends \Canvass\Field\AbstractField\Input\Validation
+final class Validate extends \Canvass\Field\AbstractField\Input\Validate
 {
     private const WRAP_VALUES = ['hard', 'soft', 'off'];
 
@@ -18,18 +16,7 @@ final class Validation extends \Canvass\Field\AbstractField\Input\Validation
         'wrap' => ['required' => false, 'one_of' => self::WRAP_VALUES,],
     ];
 
-    public function populateValidationRulesFromFieldData(
-        FieldData $field,
-        array &$rules
-    )
-    {
-        self::populateTextBasedFieldRules(
-            $field,
-            $rules
-        );
-    }
-
-    public static function getValidationKeysWithRequiredValue(): array
+    public function getDataColumnsMatchedWithRequiredBoolean(): array
     {
         return [
             'name' => true,

@@ -6,9 +6,9 @@ use Canvass\Field\AbstractField\AbstractValidateFieldAction;
 use Canvass\Contract\FieldData;
 use Canvass\Support\Validation\Builder;
 
-abstract class Validation extends AbstractValidateFieldAction
+abstract class Validate extends AbstractValidateFieldAction
 {
-    public static function getValidationKeysWithRequiredValue(): array
+    public function getDataColumnsMatchedWithRequiredBoolean(): array
     {
         return [
             'name' => true,
@@ -24,10 +24,10 @@ abstract class Validation extends AbstractValidateFieldAction
         array &$rules
     )
     {
-        self::populateTextBasedFieldRules($field, $rules);
+        $this->populateTextBasedFieldRules($field, $rules);
     }
 
-    public static function populateTextBasedFieldRules(
+    public function populateTextBasedFieldRules(
         FieldData $field,
         array &$rules
     )

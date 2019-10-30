@@ -1,8 +1,8 @@
 <?php
 
-namespace Canvass\Action\Validation\FormField;
+namespace Canvass\Contract;
 
-interface InterfaceValidateField
+interface ValidateFieldAction
 {
     public function getValidationRules(): array;
 

@@ -2,7 +2,7 @@
 
 namespace Canvass\Field\Text;
 
-final class Validation extends \Canvass\Field\AbstractField\Input\Validation
+final class Validate extends \Canvass\Field\AbstractField\Input\Validate
 {
     protected $attributes_validation_rules = [
         'required' => ['required' => false,],

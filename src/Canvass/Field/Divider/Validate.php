@@ -5,9 +5,9 @@ namespace Canvass\Field\Divider;
 use Canvass\Contract\FieldData;
 use Canvass\Field\AbstractField\AbstractValidateFieldAction;
 
-final class Validation extends AbstractValidateFieldAction
+final class Validate extends AbstractValidateFieldAction
 {
-    public static function getValidationKeysWithRequiredValue(): array
+    public function getDataColumnsMatchedWithRequiredBoolean(): array
     {
         return [
             'identifier' => true,

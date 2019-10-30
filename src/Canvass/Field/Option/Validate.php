@@ -3,8 +3,9 @@
 namespace Canvass\Field\Option;
 
 use Canvass\Contract\FieldData;
+use Canvass\Field\AbstractField\AbstractValidateFieldAction;
 
-final class Validation extends \Canvass\Field\AbstractField\Input\Validation
+final class Validate extends AbstractValidateFieldAction
 {
     public function populateValidationRulesFromFieldData(
         FieldData $field,
@@ -13,7 +14,7 @@ final class Validation extends \Canvass\Field\AbstractField\Input\Validation
         return null;
     }
 
-    public static function getValidationKeysWithRequiredValue(): array
+    public function getDataColumnsMatchedWithRequiredBoolean(): array
     {
         return [
             'label' => true,

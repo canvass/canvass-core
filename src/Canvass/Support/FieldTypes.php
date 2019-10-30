@@ -10,16 +10,17 @@ use Canvass\Forge;
 
 final class FieldTypes
 {
+    /** @var string[] Field types that are used in the input element */
     public const INPUT_TYPES = [
-        'checkbox', 'date', 'email', 'number', 'radio', 'search',
+        'checkbox', 'date', 'email', 'number', 'radio',
         'tel', 'text', 'time', 'url',
     ];
 
+    /** @var string[] A map of type (key) to general_type (value) */
     private const GENERAL_TYPES_MAP = [
         'date' => 'input',
         'email' => 'input',
         'number' => 'input',
-        'search' => 'input',
         'tel' => 'input',
         'text' => 'input',
         'time' => 'input',
@@ -38,6 +39,11 @@ final class FieldTypes
         'column' => 'column',
     ];
 
+    /**
+     * Get a list of basic field types
+     * @param bool $just_keys
+     * @return array
+     */
     public static function get(bool $just_keys = false): array
     {
         $values = [
@@ -60,6 +66,8 @@ final class FieldTypes
     }
 
     /**
+     * Checks to see if the supplied type is a valid/expected value
+     *
      * @param string $type
      * @return bool
      * @throws \Canvass\Exception\InvalidValidationData
@@ -74,6 +82,8 @@ final class FieldTypes
     }
 
     /**
+     * Returns the general/generic type string using the supplied value
+     *
      * @param string $type
      * @return string
      * @throws \Canvass\Exception\InvalidValidationData
@@ -92,6 +102,11 @@ final class FieldTypes
         return self::GENERAL_TYPES_MAP[$type];
     }
 
+    /**
+     * Returns the list of input types with a user-friendly title
+     *
+     * @return string[]
+     */
     public static function getInputTypes(): array
     {
         return [
@@ -106,8 +121,10 @@ final class FieldTypes
     }
 
     /**
-     * @param string $type
-     * @param string|null $alternate_type
+     * Returns an instantiated Validate action based on the supplied type(s)
+     *
+     * @param string $type The field type name
+     * @param string|null $alternate_type The general type name
      * @param \Canvass\Contract\Validate|null $validator
      * @param \Canvass\Contract\ValidationMap|null $validation_map
      * @return \Canvass\Field\AbstractField\AbstractValidateFieldAction
@@ -122,9 +139,9 @@ final class FieldTypes
     ): AbstractValidateFieldAction
     {
         try {
-            $class = self::getClassName($type, 'Validation');
+            $class = self::getClassName($type, 'Validate');
         } catch (InvalidValidationData $e) {
-            $class = self::getClassName($alternate_type, 'Validation');
+            $class = self::getClassName($alternate_type, 'Validate');
         }
 
         /** @var \Canvass\Action\Validation\AbstractValidateDataAction $validate */
@@ -134,11 +151,14 @@ final class FieldTypes
         );
     }
 
-    public static function getValidateActionClassName(string $type): string
-    {
-        return self::getClassName($type, 'Validation');
-    }
-
+    /**
+     * Returns the class path for the desired class (suffix) using the supplied type
+     *
+     * @param string $type
+     * @param string $suffix
+     * @return string
+     * @throws \Canvass\Exception\InvalidValidationData
+     */
     public static function getClassName(string $type, string $suffix): string
     {
         $paths = array_reverse(Forge::getFieldPaths());

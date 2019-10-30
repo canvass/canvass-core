@@ -23,7 +23,7 @@ abstract class ChildFieldValidation
             ->build();
     }
 
-    public static function getValidationKeysWithRequiredValue(): array
+    public function getDataColumnsMatchedWithRequiredBoolean(): array
     {
         return [
             'name' => true,

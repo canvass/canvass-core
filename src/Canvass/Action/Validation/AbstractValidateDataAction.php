@@ -2,8 +2,6 @@
 
 namespace Canvass\Action\Validation;
 
-use Canvass\Exception\InvalidValidationData;
-
 abstract class AbstractValidateDataAction
 {
     /** @var \Canvass\Contract\Validate */

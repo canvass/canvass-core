@@ -60,7 +60,7 @@ final class StoreField extends AbstractFieldAction
             );
         }
 
-        foreach (array_keys($validate::getValidationKeysWithRequiredValue()) as $key) {
+        foreach (array_keys($validate->getDataColumnsMatchedWithRequiredBoolean()) as $key) {
             if (isset($data[$key])) {
                 $this->field->setData($key, $data[$key]);
             }

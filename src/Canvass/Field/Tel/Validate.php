@@ -2,9 +2,7 @@
 
 namespace Canvass\Field\Tel;
 
-use Canvass\Contract\FieldData;
-
-final class Validation extends \Canvass\Field\AbstractField\Input\Validation
+final class Validate extends \Canvass\Field\AbstractField\Input\Validate
 {
     protected $attributes_validation_rules = [
         'required' => ['required' => false,],
@@ -14,13 +12,6 @@ final class Validation extends \Canvass\Field\AbstractField\Input\Validation
         'minlength' => ['required' => false, 'numeric' => true,],
         'maxlength' => ['required' => false, 'numeric' => true,],
     ];
-
-    public function populateValidationRulesFromFieldData(
-        FieldData $field,
-        array &$rules
-    ) {
-        self::populateTextBasedFieldRules($field, $rules);
-    }
 
     public function convertAttributesData($attributes): array
     {

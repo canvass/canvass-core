@@ -6,7 +6,6 @@ use Canvass\Contract\Action;
 use Canvass\Contract\FieldData;
 use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
-use Canvass\Contract\Response;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
 use Canvass\Exception\InvalidValidationData;
@@ -126,7 +125,7 @@ final class Forge extends \WebAnvil\Forge
      * @return \Canvass\Contract\Response
      * @throws \WebAnvil\ForgeClosureNotFoundException
      */
-    public static function response(): Response
+    public static function response()
     {
         return self::handleClosure(self::RESPONSE_KEY) ?? new EmptyResponse();
     }
