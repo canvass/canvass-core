@@ -24,7 +24,7 @@ final class Validate extends AbstractValidateFieldAction
     )
     {
         foreach ($column['children'] as $field) {
-            /** @var \Canvass\Action\Validation\FormField\AbstractValidateFieldAction $validator */
+            /** @var AbstractValidateFieldAction $validator */
             $validator = FieldTypes::getValidateAction(
                 $field['type'],
                 $field['general_type']

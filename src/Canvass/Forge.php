@@ -75,23 +75,6 @@ final class Forge extends \WebAnvil\Forge
         return new \Canvass\Support\FieldData($field);
     }
 
-    private static function fieldDataClass(string $type): ?string
-    {
-        $paths = array_reverse(self::getFieldPaths());
-        
-        $type = ucfirst(Str::classSegment($type));
-
-        foreach ($paths as $path_set) {
-            $class = "{$path_set['namespace']}\\{$type}\\FieldData";
-
-            if (class_exists($class)) {
-                return $class;
-            }
-        }
-
-        return null;
-    }
-
     /**
      * @return \Canvass\Contract\Validate
      * @throws \WebAnvil\ForgeClosureNotFoundException
