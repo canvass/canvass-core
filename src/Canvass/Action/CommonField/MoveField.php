@@ -2,7 +2,6 @@
 
 namespace Canvass\Action\CommonField;
 
-use Canvass\Action\CommonField\AbstractFieldAction;
 use Canvass\Exception\InvalidSortException;
 use Canvass\Forge;
 

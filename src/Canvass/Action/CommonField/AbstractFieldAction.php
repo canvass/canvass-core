@@ -2,8 +2,8 @@
 
 namespace Canvass\Action\CommonField;
 
-use Canvass\Contract\Action;
-use Canvass\Contract\FieldAction;
+use Canvass\Contract\Action\Action;
+use Canvass\Contract\Action\FieldAction;
 use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 

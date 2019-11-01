@@ -2,6 +2,7 @@
 
 namespace Canvass\Contract;
 
+use Canvass\Contract\Action\Action;
 
 interface Response
 {

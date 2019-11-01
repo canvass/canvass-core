@@ -3,7 +3,7 @@
 namespace Canvass\Action\NestedField;
 
 use Canvass\Action\CommonField\MoveField;
-use Canvass\Contract\Action;
+use Canvass\Contract\Action\Action;
 use Canvass\Exception\InvalidSortException;
 use Canvass\Forge;
 

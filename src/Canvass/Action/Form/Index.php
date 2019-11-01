@@ -4,7 +4,7 @@ namespace Canvass\Action\Form;
 
 use Canvass\Forge;
 
-class Index implements \Canvass\Contract\Action
+class Index implements \Canvass\Contract\Action\Action
 {
     public function __invoke()
     {

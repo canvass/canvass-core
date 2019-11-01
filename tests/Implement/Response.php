@@ -2,7 +2,7 @@
 
 namespace Implement;
 
-use Canvass\Contract\Action;
+use Canvass\Contract\Action\Action;
 
 class Response implements \Canvass\Contract\Response
 {
@@ -12,7 +12,7 @@ class Response implements \Canvass\Contract\Response
     private $message;
     /** @var array|null */
     private $data;
-    /** @var \Canvass\Contract\Action */
+    /** @var \Canvass\Contract\Action\Action */
     private $action;
 
     public function __construct(string $type = 'response', string $message = '')

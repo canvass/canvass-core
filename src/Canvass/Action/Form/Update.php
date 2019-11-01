@@ -3,11 +3,11 @@
 namespace Canvass\Action\Form;
 
 use Canvass\Action\Validation\ValidateFormData;
-use Canvass\Contract\Action;
-use Canvass\Contract\FieldAction;
+use Canvass\Contract\Action\Action;
+use Canvass\Contract\Action\FormAction;
 use Canvass\Forge;
 
-class Update implements Action, FieldAction
+class Update implements Action, FormAction
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;
@@ -51,7 +51,10 @@ class Update implements Action, FieldAction
         }
 
         return Forge::success(
-            sprintf('%s has been updated.', $this->form->getData('name')),
+            sprintf(
+                '%s has been updated.',
+                $this->form->getData('name')
+            ),
             $this
         );
     }

@@ -2,7 +2,7 @@
 
 namespace Canvass\Action\NestedField;
 
-use Canvass\Contract\Action;
+use Canvass\Contract\Action\Action;
 use Canvass\Forge;
 
 final class Create implements Action

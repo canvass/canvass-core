@@ -2,7 +2,7 @@
 
 namespace Canvass;
 
-use Canvass\Contract\Action;
+use Canvass\Contract\Action\Action;
 use Canvass\Contract\FieldData;
 use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
@@ -126,7 +126,7 @@ final class Forge extends \WebAnvil\Forge
 
     /**
      * @param string $message
-     * @param \Canvass\Contract\Action $action
+     * @param \Canvass\Contract\Action\Action $action
      * @return mixed
      * @throws \WebAnvil\ForgeClosureNotFoundException
      */

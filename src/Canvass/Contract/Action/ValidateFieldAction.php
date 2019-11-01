@@ -1,6 +1,6 @@
 <?php
 
-namespace Canvass\Contract;
+namespace Canvass\Contract\Action;
 
 interface ValidateFieldAction
 {

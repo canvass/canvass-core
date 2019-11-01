@@ -2,12 +2,12 @@
 
 namespace Canvass\Action\Form;
 
-use Canvass\Contract\Action;
-use Canvass\Contract\FieldAction;
+use Canvass\Contract\Action\Action;
+use Canvass\Contract\Action\FormAction;
 use Canvass\Exception\DeleteFailedException;
 use Canvass\Forge;
 
-class Destroy implements Action, FieldAction
+class Destroy implements Action, FormAction
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;
@@ -43,7 +43,10 @@ class Destroy implements Action, FieldAction
         }
 
         return Forge::success(
-            sprintf('%s has been deleted.', $this->form->getData('name')),
+            sprintf(
+                '%s has been deleted.',
+                $this->form->getData('name')
+            ),
             $this
         );
     }

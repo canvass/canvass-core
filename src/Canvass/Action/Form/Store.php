@@ -3,11 +3,11 @@
 namespace Canvass\Action\Form;
 
 use Canvass\Action\Validation\ValidateFormData;
-use Canvass\Contract\Action;
-use Canvass\Contract\FieldAction;
+use Canvass\Contract\Action\Action;
+use Canvass\Contract\Action\FormAction;
 use Canvass\Forge;
 
-class Store implements Action, FieldAction
+class Store implements Action, FormAction
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;

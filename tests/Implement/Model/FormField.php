@@ -3,6 +3,7 @@
 namespace Implement\Model;
 
 use Canvass\Contract\FormFieldModel;
+use Canvass\Contract\FormModel;
 use Canvass\Support\PreparesFormFieldData;
 
 class FormField extends Model implements FormFieldModel
@@ -10,6 +11,9 @@ class FormField extends Model implements FormFieldModel
     use PreparesFormFieldData;
 
     protected $table = 'field';
+
+    /** @var FormModel */
+    protected $form_model;
 
     protected $columns = [
         'id' => null,
@@ -82,6 +86,16 @@ class FormField extends Model implements FormFieldModel
     public function setDataToAttributes($key, $value)
     {
         $this->data['attributes'][$key] = $value;
+    }
+
+    public function getFormModel(): FormModel
+    {
+        return $this->form_model;
+    }
+
+    public function setFormModel(FormModel $form_model): void
+    {
+        $this->form_model = $form_model;
     }
 
     public function __debugInfo()

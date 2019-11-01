@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Canvass\Contract\Action;
+use Canvass\Contract\Action\Action;
 use Implement\Model\Form;
 use Implement\Model\FormField;
 use Implement\Model\Model;

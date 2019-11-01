@@ -3,8 +3,8 @@
 namespace Canvass\Action\FormField;
 
 use Canvass\Action\CommonField\MoveField;
-use Canvass\Contract\Action;
-use Canvass\Contract\FieldAction;
+use Canvass\Contract\Action\Action;
+use Canvass\Contract\Action\FieldAction;
 use Canvass\Exception\InvalidSortException;
 use Canvass\Forge;
 

@@ -2,7 +2,7 @@
 
 namespace Canvass\Action\Validation;
 
-use Canvass\Contract\Action;
+use Canvass\Contract\Action\Action;
 use Canvass\Forge;
 use Canvass\Support\FieldTypes;
 

@@ -3,9 +3,9 @@
 namespace Canvass\Action\NestedField;
 
 use Canvass\Action\CommonField\UpdateField;
-use Canvass\Contract\Action;
-use Canvass\Contract\FieldAction;
-use Canvass\Contract\NestedFieldAction;
+use Canvass\Contract\Action\Action;
+use Canvass\Contract\Action\FieldAction;
+use Canvass\Contract\Action\NestedFieldAction;
 use Canvass\Forge;
 
 final class Update implements Action, FieldAction, NestedFieldAction

@@ -3,7 +3,7 @@
 namespace Canvass\Field\AbstractField;
 
 use Canvass\Action\Validation\AbstractValidateDataAction;
-use Canvass\Contract\ValidateFieldAction;
+use Canvass\Contract\Action\ValidateFieldAction;
 use Canvass\Exception\InvalidValidationData;
 use Canvass\Contract\FieldData;
 use Canvass\Support\Validation\Builder;
