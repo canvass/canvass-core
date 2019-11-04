@@ -8,7 +8,7 @@ interface FormFieldModel
 
     public function findAllByFormId($form_id, $parent_id = null);
 
-    public function getHtmlType(): string;
+    public function getGeneralType(): string;
 
     public function prepareData(): array;
 
