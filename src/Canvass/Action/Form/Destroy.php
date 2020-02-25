@@ -6,13 +6,20 @@ use Canvass\Contract\Action\Action;
 use Canvass\Contract\Action\FormAction;
 use Canvass\Exception\DeleteFailedException;
 use Canvass\Forge;
+use WebAnvil\Interfaces\ActionInterface;
 
-class Destroy implements Action, FormAction
+class Destroy implements Action, FormAction, ActionInterface
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;
 
-    public function __invoke(int $form_id)
+    /**
+     * @param \Canvass\Action\Form\int $form_id
+     * @return mixed
+     * @throws \Canvass\Exception\DeleteFailedException
+     * @throws \WebAnvil\ForgeClosureNotFoundException
+     */
+    public function __invoke($form_id)
     {
         $this->form = Forge::form()->find($form_id, Forge::getOwnerId());
 

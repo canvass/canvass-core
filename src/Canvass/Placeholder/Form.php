@@ -2,7 +2,6 @@
 
 namespace Canvass\Placeholder;
 
-use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 
 class Form implements FormModel
@@ -21,15 +20,18 @@ class Form implements FormModel
     {
         return new FormField();
     }
-
-    public function findFieldWithSortOf(
-        int $sort,
-        $parent_id = 0
-    ): ?FormFieldModel {
+    /** @param \Canvass\Placeholder\int $sort
+     * @param int $parent_id
+     * @return \Canvass\Contract\FormFieldModel|null */
+    public function findFieldWithSortOf($sort, $parent_id = 0)
+    {
         return new self();
     }
 
-    public function findFieldsWithSortGreaterThan(int $sort, $parent_id = 0)
+    /** @param \Canvass\Placeholder\int $sort
+     * @param int $parent_id
+     * @return array|\Canvass\Contract\FormFieldModel[]|null */
+    public function findFieldsWithSortGreaterThan($sort, $parent_id = 0)
     {
         return [new self()];
     }
@@ -39,12 +41,12 @@ class Form implements FormModel
         return [new self()];
     }
 
-    public function prepareData($fields = null): array
+    public function prepareData($fields = null)
     {
         return [];
     }
 
-    public function find($id)
+    public function find($id, $owner_id = null)
     {
         return new self();
     }

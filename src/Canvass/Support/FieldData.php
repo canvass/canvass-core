@@ -21,12 +21,20 @@ class FieldData implements \Canvass\Contract\FieldData
         return $this->field->getDataFromAttributes($key);
     }
 
-    public function hasAttribute($key): bool
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function hasAttribute($key)
     {
         return $this->field->hasAttribute($key);
     }
 
-    public function addNestedField($field): \Canvass\Contract\FieldData
+    /**
+     * @param \Canvass\Contract\FieldData|\Canvass\Contract\FormFieldModel $field
+     * @return \Canvass\Contract\FieldData
+     */
+    public function addNestedField($field)
     {
         if ($field instanceof \Canvass\Contract\FormFieldModel) {
             $field = new self($field);
@@ -45,17 +53,20 @@ class FieldData implements \Canvass\Contract\FieldData
         return $this;
     }
 
-    public function clearNestedFields(): void
+    /** @return void */
+    public function clearNestedFields()
     {
         $this->children = [];
     }
 
-    public function getField(): FormFieldModel
+    /** @return \Canvass\Contract\FormFieldModel */
+    public function getField()
     {
         return $this->field;
     }
 
-    public function toArray(): array
+    /** @return array */
+    public function toArray()
     {
         $data = $this->field->prepareData();
 
@@ -66,7 +77,11 @@ class FieldData implements \Canvass\Contract\FieldData
         return $data;
     }
 
-    public function offsetExists($offset): bool
+    /**
+     * @param string $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
     {
         if ('children' === $offset) {
             return true;
@@ -75,6 +90,10 @@ class FieldData implements \Canvass\Contract\FieldData
         return ! empty($this->field->getData($offset));
     }
 
+    /**
+     * @param string $offset
+     * @return mixed
+     */
     public function offsetGet($offset)
     {
         if ('children' === $offset) {
@@ -84,7 +103,12 @@ class FieldData implements \Canvass\Contract\FieldData
         return $this->field->getData($offset);
     }
 
-    public function offsetSet($offset, $value): void
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @return void
+     */
+    public function offsetSet($offset, $value)
     {
         if ('children' === $offset) {
             throw new \InvalidArgumentException(
@@ -95,7 +119,11 @@ class FieldData implements \Canvass\Contract\FieldData
         $this->field->setData($offset, $value);
     }
 
-    public function offsetUnset($offset): void
+    /**
+     * @param mixed $offset
+     * @return void
+     */
+    public function offsetUnset($offset)
     {
         if ('children' === $offset) {
             throw new \InvalidArgumentException(

@@ -5,27 +5,18 @@ namespace Canvass\Contract;
 interface Model
 {
     public function find($id, $owner_id = null);
-
-    /**
-     * @return bool */
+    /** @return bool */
     public function save();
-
-    /**
-     * @return bool */
+    /** @return bool */
     public function delete();
-
-    /**
-     * @return mixed
-     */
+    /** @return mixed */
     public function getId();
-
     /**
      * Get a given attribute on the model.
      *
      * @param  string  $key
      * @return mixed */
     public function getData($key);
-
     /**
      * Set a given attribute on the model.
      *

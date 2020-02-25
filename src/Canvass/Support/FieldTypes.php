@@ -5,19 +5,18 @@ namespace Canvass\Support;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
 use Canvass\Exception\InvalidValidationData;
-use Canvass\Field\AbstractField\AbstractValidateFieldAction;
 use Canvass\Forge;
 
 final class FieldTypes
 {
     /** @var string[] Field types that are used in the input element */
-    public const INPUT_TYPES = [
+    public static $INPUT_TYPES = [
         'checkbox', 'date', 'email', 'number', 'radio',
         'tel', 'text', 'time', 'url',
     ];
 
     /** @var string[] A map of type (key) to general_type (value) */
-    private const GENERAL_TYPES_MAP = [
+    private static $GENERAL_TYPES_MAP = [
         'date' => 'input',
         'email' => 'input',
         'number' => 'input',
@@ -44,7 +43,7 @@ final class FieldTypes
      * @param bool $just_keys
      * @return array
      */
-    public static function get(bool $just_keys = false): array
+    public static function get($just_keys = false)
     {
         $values = [
             'input' => 'Input',
@@ -72,7 +71,7 @@ final class FieldTypes
      * @return bool
      * @throws \Canvass\Exception\InvalidValidationData
      */
-    public static function isValid(string $type): bool
+    public static function isValid($type)
     {
         if (! in_array($type, self::get(true), true)) {
             return ! empty(self::getGeneralTypeFromType($type));
@@ -88,9 +87,9 @@ final class FieldTypes
      * @return string
      * @throws \Canvass\Exception\InvalidValidationData
      */
-    public static function getGeneralTypeFromType(string $type): string
+    public static function getGeneralTypeFromType($type)
     {
-        if (empty(self::GENERAL_TYPES_MAP[$type])) {
+        if (empty(self::$GENERAL_TYPES_MAP[$type])) {
             $class = self::getClassName($type, 'field type');
 
             /** @var \Canvass\Contract\FieldType $field_type */
@@ -99,7 +98,7 @@ final class FieldTypes
             return $field_type->getGeneralType();
         }
 
-        return self::GENERAL_TYPES_MAP[$type];
+        return self::$GENERAL_TYPES_MAP[$type];
     }
 
     /**
@@ -107,7 +106,7 @@ final class FieldTypes
      *
      * @return string[]
      */
-    public static function getInputTypes(): array
+    public static function getInputTypes()
     {
         return [
             'text' => 'Generic Text',
@@ -132,11 +131,11 @@ final class FieldTypes
      * @throws \WebAnvil\ForgeClosureNotFoundException
      */
     public static function getValidateAction(
-        string $type,
-        string $alternate_type = null,
+        $type,
+        $alternate_type = null,
         Validate $validator = null,
         ValidationMap $validation_map = null
-    ): AbstractValidateFieldAction
+    )
     {
         try {
             $class = self::getClassName($type, 'Validate');
@@ -144,22 +143,29 @@ final class FieldTypes
             $class = self::getClassName($alternate_type, 'Validate');
         }
 
-        /** @var \Canvass\Action\Validation\AbstractValidateDataAction $validate */
-        return new $class(
-            $validator ?? Forge::validator(),
-            $validation_map ?? Forge::validationMap()
-        );
+        if (null === $validator) {
+            $validator = Forge::validator();
+        }
+
+        if (null === $validation_map) {
+            $validation_map = Forge::validationMap();
+        }
+
+        /**
+         * @var \Canvass\Action\Validation\AbstractValidateDataAction $validate
+         */
+        return new $class($validator, $validation_map);
     }
 
     /**
-     * Returns the class path for the desired class (suffix) using the supplied type
+     * Returns class path for the desired class (suffix) using the supplied type
      *
      * @param string $type
      * @param string $suffix
      * @return string
      * @throws \Canvass\Exception\InvalidValidationData
      */
-    public static function getClassName(string $type, string $suffix): string
+    public static function getClassName($type, $suffix)
     {
         $paths = array_reverse(Forge::getFieldPaths());
 

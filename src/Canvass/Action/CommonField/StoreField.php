@@ -38,11 +38,15 @@ final class StoreField extends AbstractFieldAction
      * @throws \Canvass\Exception\InvalidValidationData
      * @throws \WebAnvil\ForgeClosureNotFoundException
      */
-    public function run($data, string $type, int $sort): bool
+    public function run($data, $type, $sort)
     {
         $general_type = FieldTypes::getGeneralTypeFromType($type);
 
-        $attributes = $data['attributes'] ?? [];
+        if (! empty($data['attributes'])) {
+            $attributes = $data['attributes'];
+        } else {
+            $attributes = [];
+        }
         unset($data['attributes']);
 
         $validate = FieldTypes::getValidateAction($type, $general_type);
@@ -77,7 +81,7 @@ final class StoreField extends AbstractFieldAction
         return $this->field->save();
     }
 
-    private function preSave(string $type): void
+    private function preSave($type)
     {
         if ('divider' === $type) {
             $this->field->setData(

@@ -6,22 +6,26 @@ use Canvass\Action\Validation\ValidateFormData;
 use Canvass\Contract\Action\Action;
 use Canvass\Contract\Action\FormAction;
 use Canvass\Forge;
+use WebAnvil\Interfaces\ActionInterface;
 
-class Update implements Action, FormAction
+class Update implements Action, FormAction, ActionInterface
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;
 
-    public function __invoke(int $form_id, $data = null)
+    /**
+     * @param \Canvass\Action\Form\int $form_id
+     * @param null $data
+     * @return mixed
+     * @throws \WebAnvil\ForgeClosureNotFoundException
+     */
+    public function __invoke($form_id, $data = null)
     {
         /** @var \Canvass\Contract\FormModel $form */
         $this->form = Forge::form()->find($form_id, Forge::getOwnerId());
 
         if (null === $data) {
-            $data = Forge::requestData([
-                'name', 'display_name', 'introduction', 'redirect_url',
-                'identifier', 'classes', 'button_text', 'button_classes'
-            ]);
+            $data = Forge::requestData($this->request_keys);
         }
 
         $validator = new ValidateFormData(

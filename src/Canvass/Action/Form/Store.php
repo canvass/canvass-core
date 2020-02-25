@@ -6,8 +6,9 @@ use Canvass\Action\Validation\ValidateFormData;
 use Canvass\Contract\Action\Action;
 use Canvass\Contract\Action\FormAction;
 use Canvass\Forge;
+use WebAnvil\Interfaces\ActionInterface;
 
-class Store implements Action, FormAction
+class Store implements Action, FormAction, ActionInterface
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;
@@ -15,10 +16,7 @@ class Store implements Action, FormAction
     public function __invoke($data = null)
     {
         if (null === $data) {
-            $data = Forge::requestData([
-                'name', 'display_name', 'introduction', 'redirect_url',
-                'identifier', 'classes', 'button_text', 'button_classes'
-            ]);
+            $data = Forge::requestData($this->request_keys);
         }
 
         $validator = new ValidateFormData(

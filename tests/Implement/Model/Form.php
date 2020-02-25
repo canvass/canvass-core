@@ -43,9 +43,9 @@ class Form extends Model implements FormModel
     }
 
     public function findFieldWithSortOf(
-        int $sort,
+        $sort,
         $parent_id = 0
-    ): ?FormFieldModel
+    )
     {
         $fields = $this->findFields($parent_id);
 
@@ -58,7 +58,7 @@ class Form extends Model implements FormModel
         return null;
     }
 
-    public function findFieldsWithSortGreaterThan(int $sort, $parent_id = 0)
+    public function findFieldsWithSortGreaterThan($sort, $parent_id = 0)
     {
         $fields = $this->findFields($parent_id);
 

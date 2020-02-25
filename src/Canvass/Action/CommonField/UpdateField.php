@@ -6,7 +6,6 @@ use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
-use Canvass\Field\AbstractField\AbstractValidateFieldAction;
 use Canvass\Support\FieldTypes;
 
 final class UpdateField extends AbstractFieldAction
@@ -41,12 +40,14 @@ final class UpdateField extends AbstractFieldAction
     public function run(
         $data,
         $type = null,
-        bool $clear_unset_data_keys = false
-    ): bool
+        $clear_unset_data_keys = false
+    )
     {
-        $validate = FieldTypes::getValidateAction(
-            $type ?? $this->field->getData('type')
-        );
+        if (null === $type) {
+            $type = $this->field->getData('type');
+        }
+
+        $validate = FieldTypes::getValidateAction($type);
 
         if (! $validate->validate($data)) {
             return false;
@@ -63,7 +64,11 @@ final class UpdateField extends AbstractFieldAction
         return $this->field->save();
     }
 
-    protected function getValidateAction(string $type): AbstractValidateFieldAction
+    /**
+     * @param \Canvass\Action\CommonField\string $type
+     * @return \Canvass\Field\AbstractField\AbstractValidateFieldAction
+     */
+    protected function getValidateAction($type)
     {
         $ucType = ucfirst(strtolower($type));
 

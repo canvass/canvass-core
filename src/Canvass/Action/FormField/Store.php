@@ -6,8 +6,9 @@ use Canvass\Action\CommonField\StoreField;
 use Canvass\Contract\Action\Action;
 use Canvass\Contract\Action\FieldAction;
 use Canvass\Forge;
+use WebAnvil\Interfaces\ActionInterface;
 
-final class Store implements Action, FieldAction
+final class Store implements Action, FieldAction, ActionInterface
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;

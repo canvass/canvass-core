@@ -8,8 +8,9 @@ use Canvass\Contract\Action\FieldAction;
 use Canvass\Contract\Action\NestedFieldAction;
 use Canvass\Exception\DeleteFailedException;
 use Canvass\Forge;
+use WebAnvil\Interfaces\ActionInterface;
 
-final class Destroy implements Action, FieldAction, NestedFieldAction
+final class Destroy implements Action, FieldAction, NestedFieldAction, ActionInterface
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;

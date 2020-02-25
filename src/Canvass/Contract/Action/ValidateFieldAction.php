@@ -4,11 +4,14 @@ namespace Canvass\Contract\Action;
 
 interface ValidateFieldAction
 {
-    public function getValidationRules(): array;
-
-    public function validateAttributes($attributes): bool;
-
-    public function hasValidatableAttributes(): bool;
-
-    public function convertAttributesData($attributes): array;
+    /** @return array */
+    public function getValidationRules();
+    /** @param $attributes
+     * @return bool */
+    public function validateAttributes($attributes);
+    /** @return bool */
+    public function hasValidatableAttributes();
+    /** @param $attributes
+     * @return array */
+    public function convertAttributesData($attributes);
 }

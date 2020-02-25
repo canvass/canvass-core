@@ -4,5 +4,6 @@ namespace Canvass\Contract;
 
 interface FieldDataRetrievable extends FieldData
 {
-    public function retrieveAdditionalData(): self;
+    /** @return self|static */
+    public function retrieveAdditionalData();
 }

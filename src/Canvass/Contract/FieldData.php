@@ -5,15 +5,15 @@ namespace Canvass\Contract;
 interface FieldData extends \ArrayAccess
 {
     public function getAttribute($key);
-
-    public function hasAttribute($key): bool;
-
+    /** @param $key
+     * @return bool */
+    public function hasAttribute($key);
     /**
      * @param FormFieldModel|FieldData $field
      * @return self */
-    public function addNestedField($field): self;
-
-    public function clearNestedFields(): void;
-
-    public function toArray(): array;
+    public function addNestedField($field);
+    /** @return void */
+    public function clearNestedFields();
+    /** @return array */
+    public function toArray();
 }

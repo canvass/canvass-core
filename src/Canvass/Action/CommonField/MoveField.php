@@ -7,10 +7,10 @@ use Canvass\Forge;
 
 final class MoveField extends AbstractFieldAction
 {
-    public const UP = -1;
-    public const DOWN = 1;
+    const UP = -1;
+    const DOWN = 1;
 
-    public function run(int $direction, $parent_id = 0)
+    public function run($direction, $parent_id = 0)
     {
         $old_sort = (int) $this->field->getData('sort');
 
@@ -62,11 +62,15 @@ final class MoveField extends AbstractFieldAction
             return Forge::error($message, $this);
         }
 
+        $label_or_identifier = $this->field->getData('label');
+        if (empty($label_or_identifier)) {
+            $label_or_identifier = $this->field->getData('identifier');
+        }
+
         return Forge::success(
             sprintf(
                 'Field, %s, has been moved down.',
-                $this->field->getData('label') ??
-                    $this->field->getData('identifier')
+                $label_or_identifier
             ),
             $this
         );

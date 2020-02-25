@@ -6,42 +6,54 @@ class Builder
 {
     private $rules = [];
 
-    public function allowNull(bool $allow_null = true): self
+    /** @param bool $allow_null
+     * @return \Canvass\Support\Validation\Builder */
+    public function allowNull($allow_null = true)
     {
         $this->rules['allow_null'] = $allow_null;
 
         return $this;
     }
 
-    public function dataType(string $type): self
+    /** @param string $type
+     * @return \Canvass\Support\Validation\Builder */
+    public function dataType($type)
     {
         $this->rules['data_type'] = $type;
 
         return $this;
     }
 
-    public function dateFormat(string $format = 'Y-m-d'): self
+    /** @param string
+     * @return \Canvass\Support\Validation\Builder */
+    public function dateFormat($format = 'Y-m-d')
     {
         $this->rules['date_format'] = $format;
 
         return $this;
     }
 
-    public function inGroup(array $values): self
+    /** @param array
+     * @return \Canvass\Support\Validation\Builder */
+    public function inGroup(array $values)
     {
         $this->rules['in_group'] = $values;
 
         return $this;
     }
 
-    public function isValue($value): self
+    /** @param mixed
+     * @return \Canvass\Support\Validation\Builder */
+    public function isValue($value)
     {
         $this->rules['one_of'] = [$value];
 
         return $this;
     }
 
-    public function addValueToInGroup($value): self
+    /** @param mixed
+     * @return \Canvass\Support\Validation\Builder */
+    public function addValueToInGroup($value)
     {
         if (empty($this->rules['in_group'])) {
             $this->rules['in_group'] = [];
@@ -52,77 +64,99 @@ class Builder
         return $this;
     }
 
-    public function maxDate(string $date): self
+    /** @param string
+     * @return \Canvass\Support\Validation\Builder */
+    public function maxDate($date)
     {
         $this->rules['max_date'] = $date;
 
         return $this;
     }
 
-    public function minDate(string $date): self
+    /** @param string
+     * @return \Canvass\Support\Validation\Builder */
+    public function minDate($date)
     {
         $this->rules['min_date'] = $date;
 
         return $this;
     }
 
-    public function maxLength(int $max): self
+    /** @param int
+     * @return \Canvass\Support\Validation\Builder */
+    public function maxLength($max)
     {
         $this->rules['max_length'] = $max;
 
         return $this;
     }
 
-    public function maxTime(string $time): self
+    /** @param string
+     * @return \Canvass\Support\Validation\Builder */
+    public function maxTime($time)
     {
         $this->rules['max_time'] = $time;
 
         return $this;
     }
 
-    public function minTime(string $time): self
+    /** @param string
+     * @return \Canvass\Support\Validation\Builder */
+    public function minTime($time)
     {
         $this->rules['min_time'] = $time;
 
         return $this;
     }
 
-    public function maxValue(int $value): self
+    /** @param int
+     * @return \Canvass\Support\Validation\Builder */
+    public function maxValue($value)
     {
         $this->rules['max'] = $value;
 
         return $this;
     }
 
-    public function minValue(int $value): self
+    /** @param int
+     * @return \Canvass\Support\Validation\Builder */
+    public function minValue($value)
     {
         $this->rules['min'] = $value;
 
         return $this;
     }
 
-    public function minLength(int $max): self
+    /** @param int
+     * @return \Canvass\Support\Validation\Builder */
+    public function minLength($max)
     {
         $this->rules['min_length'] = $max;
 
         return $this;
     }
 
-    public function numeric(bool $numeric = true): self
+    /** @param bool $numeric
+     * @return \Canvass\Support\Validation\Builder */
+    public function numeric($numeric = true)
     {
         $this->rules['numeric'] = $numeric;
 
         return $this;
     }
 
-    public function oneOf(array $values): self
+    /** @param array $values
+     * @return \Canvass\Support\Validation\Builder */
+    public function oneOf(array $values)
     {
         $this->rules['one_of'] = $values;
 
         return $this;
     }
 
-    public function addOneOf($value): self
+    /** @param $value
+     * @return \Canvass\Support\Validation\Builder */
+    public function addOneOf($value)
     {
         if (empty($this->rules['one_of'])) {
             $this->rules['one_of'] = [];
@@ -133,53 +167,75 @@ class Builder
         return $this;
     }
 
-    public function optional(): self
+    /** @return \Canvass\Support\Validation\Builder */
+    public function optional()
     {
         return $this->required(false);
     }
 
-    public function required(bool $required = true): self
+    /**
+     * @param bool $required
+     * @return \Canvass\Support\Validation\Builder
+     */
+    public function required($required)
     {
         $this->rules['required'] = $required;
 
         return $this;
     }
 
-    public function timeFormat(string $format = 'H:i'): self
+    /**
+     * @param string $format
+     * @return \Canvass\Support\Validation\Builder
+     */
+    public function timeFormat($format = 'H:i')
     {
         return $this->dateFormat($format);
     }
 
-    public function isBoolType(): self
+    /** @return \Canvass\Support\Validation\Builder */
+    public function isBoolType()
     {
         return $this->dataType('bool');
     }
 
-    public function isStringType(): self
+    /** @return \Canvass\Support\Validation\Builder */
+    public function isStringType()
     {
         return $this->dataType('string');
     }
 
-    public function setRule(string $key, $value): self
+    /**
+     * @param \Canvass\Support\Validation\string $key
+     * @param $value
+     * @return \Canvass\Support\Validation\Builder
+     */
+    public function setRule($key, $value)
     {
         $this->rules[$key] = $value;
 
         return $this;
     }
 
-    public function clearRule(string $key): self
+    /**
+     * @param \Canvass\Support\Validation\string $key
+     * @return \Canvass\Support\Validation\Builder
+     */
+    public function clearRule($key)
     {
         unset($this->rules[$key]);
 
         return $this;
     }
 
-    public function build(): array
+    /** @return array */
+    public function build()
     {
         return $this->rules;
     }
 
-    public static function start(): self
+    /** @return \Canvass\Support\Validation\Builder */
+    public static function start()
     {
         return new self();
     }

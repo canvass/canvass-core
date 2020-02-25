@@ -50,7 +50,12 @@ class FormField extends Model implements FormFieldModel
         return $fields;
     }
 
-    public function getHtmlType(): string
+    public function getHtmlType()
+    {
+        return $this->data['general_type'];
+    }
+
+    public function getGeneralType()
     {
         return $this->data['general_type'];
     }
@@ -78,7 +83,7 @@ class FormField extends Model implements FormFieldModel
         return $this->data['attributes'][$key] ?? '';
     }
 
-    public function hasAttribute($key): bool
+    public function hasAttribute($key)
     {
         return isset($this->data['attributes'][$key]);
     }
@@ -88,7 +93,7 @@ class FormField extends Model implements FormFieldModel
         $this->data['attributes'][$key] = $value;
     }
 
-    public function getFormModel(): FormModel
+    public function getFormModel()
     {
         return $this->form_model;
     }

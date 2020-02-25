@@ -11,7 +11,8 @@ namespace Canvass\Support;
  */
 trait PreparesFormFieldData
 {
-    public function prepareData(): array
+    /** @return array */
+    public function prepareData()
     {
         return [
             'name' => $this->getData('name'),

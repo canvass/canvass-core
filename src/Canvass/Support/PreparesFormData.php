@@ -16,7 +16,7 @@ trait PreparesFormData
     /**
      * @return \Canvass\Contract\FieldData[]
      */
-    public function getNestedFields(): array
+    public function getNestedFields()
     {
         $fields = $this->findFields();
 
@@ -39,8 +39,17 @@ trait PreparesFormData
         }
 
         foreach ($map as $item) {
-            $item_id = $item['meta']['id'] ?? $item['id'];
-            $parent_id = $item['meta']['parent_id'] ?? $item['parent_id'];
+            if (! empty($item['meta']['id'])) {
+                $item_id = $item['meta']['id'];
+            } else {
+                $item_id = $item['id'];
+            }
+
+            if (! empty($item['meta']['id'])) {
+                $parent_id = $item['meta']['parent_id'];
+            } else {
+                $parent_id = $item['parent_id'];
+            }
 
             if (0 === (int) $parent_id) {
                 $nested[$item_id] = $item;
@@ -53,7 +62,7 @@ trait PreparesFormData
     /**
      * @param array|null $fields
      * @return array */
-    public function prepareData($fields = null): array
+    public function prepareData($fields = null)
     {
         $data = [
             'id' => $this->getId(),
@@ -75,7 +84,10 @@ trait PreparesFormData
     /** @return \Canvass\Contract\FormFieldModel[]|null */
     abstract public function findFields();
 
-    protected function getActionUrl($form_id): string
+    /**
+     * @param $form_id
+     * @return string */
+    protected function getActionUrl($form_id)
     {
         return Forge::getBaseUrlSegment() . $form_id;
     }

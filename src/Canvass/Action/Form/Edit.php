@@ -10,7 +10,12 @@ class Edit implements Action, FormAction
 {
     private $form_id;
 
-    public function __invoke(int $form_id)
+    /**
+     * @param \Canvass\Action\Form\int $form_id
+     * @return mixed
+     * @throws \WebAnvil\ForgeClosureNotFoundException
+     */
+    public function __invoke($form_id)
     {
         $this->form_id = $form_id;
 

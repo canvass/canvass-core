@@ -4,12 +4,20 @@ namespace Canvass\Support;
 
 class Str
 {
-    public static function classSegment(string $string): string
+    /**
+     * @param string $string
+     * @return string
+     */
+    public static function classSegment($string)
     {
         return str_replace(['-', ' '], '', ucwords($string, '- '));
     }
 
-    public static function slug(string $string = null): string
+    /**
+     * @param string $string
+     * @return string
+     */
+    public static function slug($string = null)
     {
         if (null === $string) {
             return '';

@@ -11,13 +11,18 @@ class FormField implements FormFieldModel
     {
         return [new self()];
     }
-
-    public function getHtmlType(): string
+    /** @return string */
+    public function getHtmlType()
     {
         return '';
     }
-
-    public function prepareData(): array
+    /** @return string */
+    public function getGeneralType()
+    {
+        return '';
+    }
+    /** @return array */
+    public function prepareData()
     {
         return [];
     }
@@ -71,13 +76,14 @@ class FormField implements FormFieldModel
     {
         return false;
     }
-
-    public function getFormModel(): FormModel
+    /** @return \Canvass\Contract\FormModel */
+    public function getFormModel()
     {
         return new Form();
     }
-
-    public function setFormModel(FormModel $form_model): void
+    /** @param \Canvass\Contract\FormModel
+     * @return void */
+    public function setFormModel(FormModel $form_model)
     {
         return;
     }

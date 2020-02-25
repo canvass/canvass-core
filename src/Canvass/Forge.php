@@ -2,59 +2,56 @@
 
 namespace Canvass;
 
-use Canvass\Contract\Action\Action;
-use Canvass\Contract\FieldData;
 use Canvass\Contract\FormFieldModel;
-use Canvass\Contract\FormModel;
-use Canvass\Contract\Validate;
-use Canvass\Contract\ValidationMap;
 use Canvass\Exception\InvalidValidationData;
 use Canvass\Placeholder\Form as EmptyForm;
 use Canvass\Placeholder\FormField as EmptyField;
 use Canvass\Placeholder\Response as EmptyResponse;
-use Canvass\Placeholder\Validate as EmptyValidate;
 use Canvass\Support\FieldTypes;
-use Canvass\Support\Str;
 use WebAnvil\ForgeClosureNotFoundException;
+use WebAnvil\Interfaces\ActionInterface;
 
 final class Forge extends \WebAnvil\Forge
 {
-    private const RESPONSE_KEY = 'response';
+    const RESPONSE_KEY = 'response';
 
     private static $owner_id;
 
     private static $base_url_segment = '/form/';
 
-    private static $field_paths = [
-        [
-            'namespace' => __NAMESPACE__ . '\\Field',
-            'path' => __DIR__ . '/Field'
-        ]
-    ];
+    private static $field_paths = [];
 
     /**
      * @return \Canvass\Contract\FormModel
      * @throws \WebAnvil\ForgeClosureNotFoundException
      */
-    public static function form(): FormModel
+    public static function form()
     {
-        return self::handleClosure('form') ?? new EmptyForm();
+        if (null !== ($result = self::handleClosure('form'))) {
+            return $result;
+        }
+
+        return new EmptyForm();
     }
 
     /**
      * @return \Canvass\Contract\FormFieldModel
      * @throws \WebAnvil\ForgeClosureNotFoundException
      */
-    public static function field(): FormFieldModel
+    public static function field()
     {
-        return self::handleClosure('field') ?? new EmptyField();
+        if (null !== ($result = self::handleClosure('field'))) {
+            return $result;
+        }
+
+        return new EmptyField();
     }
 
     /**
      * @param \Canvass\Contract\FormFieldModel $field
      * @return \Canvass\Contract\FieldData
      */
-    public static function fieldData(FormFieldModel $field): FieldData
+    public static function fieldData(FormFieldModel $field)
     {
         $type = $field->getData('type');
 
@@ -76,24 +73,10 @@ final class Forge extends \WebAnvil\Forge
     }
 
     /**
-     * @return \Canvass\Contract\Validate
-     * @throws \WebAnvil\ForgeClosureNotFoundException
+     * @param array|null $fields
+     * @return array
      */
-    public static function validator(): Validate
-    {
-        return self::handleClosure('validate') ?? new EmptyValidate();
-    }
-
-    /**
-     * @return \Canvass\Contract\ValidationMap|null
-     * @throws \WebAnvil\ForgeClosureNotFoundException
-     */
-    public static function validationMap(): ?ValidationMap
-    {
-        return self::handleClosure('validation_map', false);
-    }
-
-    public static function requestData(array $fields = null): array
+    public static function requestData(array $fields = null)
     {
         try {
             $closure = self::get('request');
@@ -110,7 +93,11 @@ final class Forge extends \WebAnvil\Forge
      */
     public static function response()
     {
-        return self::handleClosure(self::RESPONSE_KEY) ?? new EmptyResponse();
+        if (null !== ($result = self::handleClosure(self::RESPONSE_KEY))) {
+            return $result;
+        }
+
+        return new EmptyResponse();
     }
 
     /** @return mixed|null */
@@ -119,18 +106,19 @@ final class Forge extends \WebAnvil\Forge
        return self::$owner_id;
     }
 
-    public static function getBaseUrlSegment(): string
+    /** @return string */
+    public static function getBaseUrlSegment()
     {
         return self::$base_url_segment;
     }
 
     /**
      * @param string $message
-     * @param \Canvass\Contract\Action\Action $action
+     * @param ActionInterface $action
      * @return mixed
      * @throws \WebAnvil\ForgeClosureNotFoundException
      */
-    public static function success(string $message, Action $action)
+    public static function success($message, ActionInterface $action)
     {
         try {
             $success = self::get('success');
@@ -145,11 +133,11 @@ final class Forge extends \WebAnvil\Forge
 
     /**
      * @param string $message
-     * @param \Canvass\Contract\Action $action
+     * @param ActionInterface $action
      * @return mixed
      * @throws \WebAnvil\ForgeClosureNotFoundException
      */
-    public static function error(string $message, Action $action)
+    public static function error($message, ActionInterface $action)
     {
         try {
             $error = self::get('error');
@@ -162,7 +150,11 @@ final class Forge extends \WebAnvil\Forge
         return $response();
     }
 
-    public static function logThrowable(\Throwable $e): void
+    /**
+     * @param \Exception|\Throwable
+     * @return void
+     */
+    public static function logThrowable($e)
     {
         try {
             $logger = self::get('log');
@@ -171,69 +163,133 @@ final class Forge extends \WebAnvil\Forge
         } catch (ForgeClosureNotFoundException $ignore) {}
     }
 
-    public static function setFormClosure(\Closure $form): void
+    /**
+     * @param \Closure
+     * @return void
+     */
+    public static function setFormClosure(\Closure $form)
     {
         self::set('form', $form);
     }
 
-    public static function setFieldClosure(\Closure $field): void
+    /**
+     * @param \Closure
+     * @return void
+     */
+    public static function setFieldClosure(\Closure $field)
     {
         self::set('field', $field);
     }
 
-    public static function setValidatorClosure(\Closure $validate): void
+    /**
+     * @param \Closure
+     * @return void
+     */
+    public static function setValidatorClosure(\Closure $validate)
     {
         self::set('validate', $validate);
     }
 
-    public static function setValidationMapClosure(\Closure $map): void
+    /**
+     * @param \Closure
+     * @return void
+     */
+    public static function setValidationMapClosure(\Closure $map)
     {
         self::set('validation_map', $map);
     }
 
-    public static function setLoggerClosure(\Closure $closure): void
+    /**
+     * @param \Closure
+     * @return void
+     */
+    public static function setLoggerClosure(\Closure $closure)
     {
         self::set('log', $closure);
     }
 
-    public static function setRequestDataClosure(\Closure $request): void
+    /**
+     * @param \Closure
+     * @return void
+     */
+    public static function setRequestDataClosure(\Closure $request)
     {
         self::set('request', $request);
     }
 
-    public static function setResponseClosure(\Closure $response): void
+    /**
+     * @param \Closure
+     * @return void
+     */
+    public static function setResponseClosure(\Closure $response)
     {
         self::set('response', $response);
     }
 
-    public static function setSuccessClosure(\Closure $response): void
+    /**
+     * @param \Closure
+     * @return void
+     */
+    public static function setSuccessClosure(\Closure $response)
     {
         self::set('success', $response);
     }
 
-    public static function setErrorClosure(\Closure $response): void
+    /**
+     * @param \Closure
+     * @return void
+     */
+    public static function setErrorClosure(\Closure $response)
     {
         self::set('error', $response);
     }
 
-    public static function setOwnerId($owner_id): void
+    /**
+     * @param int $owner_id
+     * @return void
+     */
+    public static function setOwnerId($owner_id)
     {
         self::$owner_id = $owner_id;
     }
 
-    public static function setBaseUrlSegment(string $segment): void
+    /**
+     * @param string
+     * @return void
+     */
+    public static function setBaseUrlSegment($segment)
     {
         self::$base_url_segment =
             '/' . trim($segment, "/ \t\n\r\0\x0B") . '/';
     }
 
-    public static function addFieldPath(string $path, string $namespace): void
+    /**
+     * @param string $path
+     * @param string $namespace
+     * @return void
+     */
+    public static function addFieldPath($path, $namespace)
     {
+        self::setDefaultPath();
+
         self::$field_paths[] = ['namespace' => $namespace, 'path' => $path];
     }
 
-    public static function getFieldPaths(): array
+    /** @return array */
+    public static function getFieldPaths()
     {
+        self::setDefaultPath();
+
         return self::$field_paths;
+    }
+
+    private static function setDefaultPath()
+    {
+        if (empty(self::$field_paths)) {
+            self::$field_paths[] = [
+                'namespace' => __NAMESPACE__ . '\\Field',
+                'path' => __DIR__ . '/Field'
+            ];
+        }
     }
 }

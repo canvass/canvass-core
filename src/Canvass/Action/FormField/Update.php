@@ -6,8 +6,9 @@ use Canvass\Action\CommonField\UpdateField;
 use Canvass\Contract\Action\Action;
 use Canvass\Contract\Action\FieldAction;
 use Canvass\Forge;
+use WebAnvil\Interfaces\ActionInterface;
 
-final class Update implements Action, FieldAction
+final class Update implements Action, FieldAction, ActionInterface
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;
