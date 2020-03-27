@@ -11,7 +11,12 @@ final class Index implements Action, FieldAction
     /** @var \Canvass\Contract\FormModel */
     private $form;
 
-    public function __invoke(int $form_id)
+    /**
+     * @param int $form_id
+     * @return mixed
+     * @throws \WebAnvil\ForgeClosureNotFoundException
+     */
+    public function __invoke($form_id)
     {
         $this->form = Forge::form()->find($form_id, Forge::getOwnerId());
 

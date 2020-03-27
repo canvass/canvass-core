@@ -14,7 +14,14 @@ final class Destroy implements Action, FieldAction, ActionInterface
     /** @var \Canvass\Contract\FormModel */
     private $form;
 
-    public function __invoke(int $form_id, int $field_id)
+    /**
+     * @param int $form_id
+     * @param int $field_id
+     * @return mixed
+     * @throws \Canvass\Exception\DeleteFailedException
+     * @throws \WebAnvil\ForgeClosureNotFoundException
+     */
+    public function __invoke($form_id, $field_id)
     {
         $this->form = Forge::form()->find($form_id, Forge::getOwnerId());
 
@@ -48,12 +55,13 @@ final class Destroy implements Action, FieldAction, ActionInterface
             );
         }
 
+        $title = $field->getData('label');
+        if (empty($title)) {
+            $title = $field->getData('identifier');
+        }
+
         return Forge::success(
-            sprintf(
-                'Field, %s, has been deleted.',
-                $field->getData('label') ??
-                    $field->getData('identifier')
-            ),
+            sprintf('Field, %s, has been deleted.', $title),
             $this
         );
     }

@@ -10,6 +10,7 @@ class Create implements \Canvass\Contract\Action\Action
     {
         return Forge::response()->respond(
             $this,
-            ['form' => Forge::form()]);
+            ['form' => Forge::form()]
+        );
     }
 }

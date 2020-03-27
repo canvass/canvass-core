@@ -77,7 +77,8 @@ final class ValidateUserSubmission extends AbstractValidateDataAction
         }
     }
 
-    public function getValidationRules(): array
+    /** @return array */
+    public function getValidationRules()
     {
         return $this->validation;
     }

@@ -13,7 +13,13 @@ final class Update implements Action, FieldAction, ActionInterface
     /** @var \Canvass\Contract\FormModel */
     private $form;
 
-    public function __invoke(int $form_id, int $field_id, $data = null)
+    /**
+     * @param int $form_id
+     * @param int $field_id
+     * @param null $data
+     * @return mixed
+     */
+    public function __invoke($form_id, $field_id, $data = null)
     {
         $this->form = Forge::form()->find($form_id, Forge::getOwnerId());
 
@@ -43,12 +49,13 @@ final class Update implements Action, FieldAction, ActionInterface
             return Forge::error('Could not update field.', $this);
         }
 
+        $title = $field->getData('label');
+        if (empty($title)) {
+            $title = $field->getData('identifier');
+        }
+
         return Forge::success(
-            sprintf(
-                '%s has been updated.',
-                $field->getData('label') ??
-                    $field->getData('identifier')
-            ),
+            sprintf('%s has been updated.', $title),
             $this
         );
     }

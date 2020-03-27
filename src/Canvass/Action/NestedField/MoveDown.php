@@ -9,7 +9,13 @@ use Canvass\Forge;
 
 final class MoveDown implements Action
 {
-    public function __invoke(int $form_id, int $field_id, int $option_id)
+    /**
+     * @param int $form_id
+     * @param int $field_id
+     * @param int $option_id
+     * @return mixed
+     */
+    public function __invoke($form_id, $field_id, $option_id)
     {
         $form = \Canvass\Forge::form()->find($form_id, Forge::getOwnerId());
 
@@ -33,19 +39,14 @@ final class MoveDown implements Action
             return Forge::error($message, $this);
         }
 
+        $title = $field->getData('label');
+        if (empty($title)) {
+            $title = $field->getData('identifier');
+        }
+
         return Forge::success(
-            sprintf(
-                'Field, %s, has been moved down.',
-                $field->getData('label') ?? $field->getData('identifier')
-            ),
+            sprintf('Field, %s, has been moved down.', $title),
             $this
         );
-
-
-//            redirect()->route('form_field.edit', [$form->id, $parent->id])
-//            ->with(
-//                'success',
-//
-//            );
     }
 }

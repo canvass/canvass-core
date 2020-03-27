@@ -2,6 +2,8 @@
 
 namespace Canvass\Placeholder;
 
+use Canvass\Contract\Action\Action;
+
 class Response implements \Canvass\Contract\Response
 {
     /**
@@ -9,7 +11,7 @@ class Response implements \Canvass\Contract\Response
      * @param null $data
      * @return string
      */
-    public function respond($action, $data = null)
+    public function respond(Action $action, $data = null)
     {
         return '';
     }

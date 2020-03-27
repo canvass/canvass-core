@@ -16,12 +16,14 @@ final class Update implements Action, FieldAction, NestedFieldAction, ActionInte
     /** @var \Canvass\Contract\FormFieldModel */
     private $parent;
 
-    public function __invoke(
-        int $form_id,
-        int $parent_id,
-        int $field_id,
-        $data = null
-    )
+    /**
+     * @param int $form_id
+     * @param int $parent_id
+     * @param int $field_id
+     * @param null $data
+     * @return mixed
+     */
+    public function __invoke($form_id, $parent_id, $field_id, $data = null)
     {
         if (null === $data) {
             $data = Forge::requestData();
@@ -53,11 +55,13 @@ final class Update implements Action, FieldAction, NestedFieldAction, ActionInte
             return Forge::error('Could not update field option.', $this);
         }
 
+        $title = $field->getData('label');
+        if (empty($title)) {
+            $title = $field->getData('identifier');
+        }
+
         return Forge::success(
-            sprintf(
-                '%s has been updated.',
-                $field->getData('label') ?? $field->getData('identifier')
-            ),
+            sprintf('%s has been updated.', $title),
             $this
         );
     }

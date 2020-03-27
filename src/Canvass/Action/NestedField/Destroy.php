@@ -17,7 +17,13 @@ final class Destroy implements Action, FieldAction, NestedFieldAction, ActionInt
     /** @var \Canvass\Contract\FormFieldModel */
     private $parent;
 
-    public function __invoke(int $form_id, int $parent_id, int $field_id)
+    /**
+     * @param int $form_id
+     * @param int $parent_id
+     * @param int $field_id
+     * @return mixed
+     */
+    public function __invoke($form_id, $parent_id, $field_id)
     {
         $this->form = Forge::form()->find($form_id, Forge::getOwnerId());
 
@@ -54,12 +60,13 @@ final class Destroy implements Action, FieldAction, NestedFieldAction, ActionInt
             );
         }
 
+        $title = $field->getData('label');
+        if (empty($title)) {
+            $title = $field->getData('identifier');
+        }
+
         return Forge::success(
-            sprintf(
-                'Field, %s, has been deleted.',
-                $field->getData('label') ??
-                    $field->getData('identifier')
-            ),
+            sprintf('Field, %s, has been deleted.', $title),
             $this
         );
     }

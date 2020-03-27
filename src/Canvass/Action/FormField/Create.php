@@ -11,7 +11,15 @@ final class Create implements Action, FieldAction
     /** @var \Canvass\Contract\FormModel */
     private $form;
 
-    public function __invoke(int $form_id, string $type, int $sort = null)
+    /**
+     * @param int $form_id
+     * @param string $type
+     * @param int|null $sort
+     * @return mixed
+     * @throws \Canvass\Exception\InvalidValidationData
+     * @throws \WebAnvil\ForgeClosureNotFoundException
+     */
+    public function __invoke($form_id, $type, $sort = null)
     {
         \Canvass\Support\FieldTypes::isValid($type);
 

@@ -41,7 +41,7 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
      * @return array
      * @throws \Canvass\Exception\InvalidValidationData
      */
-    public function getValidationRules(): array
+    public function getValidationRules()
     {
         $rules = [];
 
@@ -66,9 +66,13 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
      *
      * @return array
      */
-    abstract public function getDataColumnsMatchedWithRequiredBoolean(): array;
+    abstract public function getDataColumnsMatchedWithRequiredBoolean();
 
-    public function validateAttributes($attributes): bool
+    /**
+     * @param $attributes
+     * @return bool
+     */
+    public function validateAttributes($attributes)
     {
         if (null === $this->attributes_validation_rules) {
             throw new InvalidValidationData(
@@ -82,17 +86,30 @@ abstract class AbstractValidateFieldAction extends AbstractValidateDataAction
         );
     }
 
-    public function hasValidatableAttributes(): bool
+    /**
+     * @return bool
+     */
+    public function hasValidatableAttributes()
     {
         return ! empty($this->attributes_validation_rules);
     }
 
-    public function convertAttributesData($attributes): array
+    /**
+     * @param $attributes
+     * @return array
+     */
+    public function convertAttributesData($attributes)
     {
         return [];
     }
 
-    protected function getRule($name, bool $required): array
+    /**
+     * @param $name
+     * @param bool $required
+     * @return array
+     * @throws \Canvass\Exception\InvalidValidationData
+     */
+    protected function getRule($name, $required)
     {
         if (empty($this->rules[$name])) {
             throw new InvalidValidationData(

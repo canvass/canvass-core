@@ -21,7 +21,8 @@ final class UpdateField extends AbstractFieldAction
         Validate $validator,
         $owner_id = null,
         ValidationMap $validation_map = null
-    ) {
+    )
+    {
         parent::__construct($form, $field, $owner_id);
 
         $this->validator = $validator;

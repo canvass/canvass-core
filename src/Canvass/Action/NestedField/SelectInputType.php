@@ -8,7 +8,13 @@ use Canvass\Support\FieldTypes;
 
 class SelectInputType implements Action
 {
-    public function __invoke(int $form_id, int $field_id, int $sort = null)
+    /**
+     * @param int $form_id
+     * @param int $field_id
+     * @param int|null $sort
+     * @return mixed
+     */
+    public function __invoke($form_id, $field_id, $sort = null)
     {
         $form = Forge::form()->find($form_id, Forge::getOwnerId());
 

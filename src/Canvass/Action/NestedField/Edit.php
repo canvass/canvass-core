@@ -7,7 +7,13 @@ use Canvass\Forge;
 
 final class Edit implements Action
 {
-    public function __invoke(int $form_id, int $parent_id, int $field_id)
+    /**
+     * @param int $form_id
+     * @param int $parent_id
+     * @param int $field_id
+     * @return mixed
+     */
+    public function __invoke($form_id, $parent_id, $field_id)
     {
         $form = \Canvass\Forge::form()->find($form_id, Forge::getOwnerId());
 

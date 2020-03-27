@@ -13,10 +13,17 @@ final class Store implements Action, FieldAction, ActionInterface
     /** @var \Canvass\Contract\FormModel */
     private $form;
 
+    /**
+     * @param int $form_id
+     * @param string $type
+     * @param int|null $sort
+     * @param null $data
+     * @return mixed
+     */
     public function __invoke(
-        int $form_id,
-        string $type,
-        int $sort = null,
+        $form_id,
+        $type,
+        $sort = null,
         $data = null
     )
     {
@@ -50,12 +57,13 @@ final class Store implements Action, FieldAction, ActionInterface
             return Forge::error('Could not save field.', $this);
         }
 
+        $title = $field->getData('label');
+        if (empty($title)) {
+            $title = $field->getData('identifier');
+        }
+
         return Forge::success(
-            sprintf(
-                '%s has been saved.',
-                $field->getData('label') ??
-                    $field->getData('identifier')
-            ),
+            sprintf('%s has been saved.', $title),
             $this
         );
     }

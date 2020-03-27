@@ -4,7 +4,8 @@ namespace Canvass\Action\Validation;
 
 final class ValidateFormData extends AbstractValidateDataAction
 {
-    public function getValidationRules(): array
+    /** @return array */
+    public function getValidationRules()
     {
         return [
             'name' => [

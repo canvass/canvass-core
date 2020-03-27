@@ -16,12 +16,7 @@ final class Create implements Action
      * @throws \Canvass\Exception\InvalidValidationData
      * @throws \WebAnvil\ForgeClosureNotFoundException
      */
-    public function __invoke(
-        int $form_id,
-        int $field_id,
-        int $sort,
-        string $type
-    )
+    public function __invoke($form_id, $field_id, $sort, $type)
     {
         \Canvass\Support\FieldTypes::isValid($type);
 

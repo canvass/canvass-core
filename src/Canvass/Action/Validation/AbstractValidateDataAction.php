@@ -20,12 +20,17 @@ abstract class AbstractValidateDataAction
         $this->validationConverter = $validationConverter;
     }
 
-    public function validate($data): bool
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function validate($data)
     {
         return $this->validateDataWithRules($data, $this->getValidationRules());
     }
 
-    abstract public function getValidationRules(): array;
+    /** @return array */
+    abstract public function getValidationRules();
 
     protected function validateDataWithRules($data, $rules)
     {

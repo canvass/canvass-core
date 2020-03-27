@@ -8,7 +8,8 @@ use Canvass\Support\Validation\Builder;
 
 abstract class Validate extends AbstractValidateFieldAction
 {
-    public function getDataColumnsMatchedWithRequiredBoolean(): array
+    /** @return array */
+    public function getDataColumnsMatchedWithRequiredBoolean()
     {
         return [
             'name' => true,
@@ -19,6 +20,10 @@ abstract class Validate extends AbstractValidateFieldAction
         ];
     }
 
+    /**
+     * @param \Canvass\Contract\FieldData $field
+     * @param array $rules
+     */
     public function populateValidationRulesFromFieldData(
         FieldData $field,
         array &$rules
@@ -27,6 +32,10 @@ abstract class Validate extends AbstractValidateFieldAction
         $this->populateTextBasedFieldRules($field, $rules);
     }
 
+    /**
+     * @param \Canvass\Contract\FieldData $field
+     * @param array $rules
+     */
     public function populateTextBasedFieldRules(
         FieldData $field,
         array &$rules

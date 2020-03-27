@@ -12,6 +12,10 @@ abstract class ChildFieldValidation
         'checked' => ['checked' => false,],
     ];
 
+    /**
+     * @param \Canvass\Contract\FieldData $field
+     * @param array $rules
+     */
     public function populateValidationRulesFromFieldData(
         FieldData $field,
         array &$rules
@@ -23,7 +27,8 @@ abstract class ChildFieldValidation
             ->build();
     }
 
-    public function getDataColumnsMatchedWithRequiredBoolean(): array
+    /** @return array */
+    public function getDataColumnsMatchedWithRequiredBoolean()
     {
         return [
             'name' => true,
@@ -35,7 +40,11 @@ abstract class ChildFieldValidation
         ];
     }
 
-    public function convertAttributesData($attributes): array
+    /**
+     * @param array|mixed $attributes
+     * @return array
+     */
+    public function convertAttributesData($attributes)
     {
         $return = [];
 

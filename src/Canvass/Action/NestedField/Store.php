@@ -27,10 +27,10 @@ final class Store implements Action, FieldAction, NestedFieldAction, ActionInter
      * @throws \WebAnvil\ForgeClosureNotFoundException
      */
     public function __invoke(
-        int $form_id,
-        int $field_id,
-        int $sort,
-        string $type,
+        $form_id,
+        $field_id,
+        $sort,
+        $type,
         $data = null
     )
     {
@@ -71,11 +71,13 @@ final class Store implements Action, FieldAction, NestedFieldAction, ActionInter
             return Forge::error('Could not save nested field.', $this);
         }
 
+        $title = $field->getData('label');
+        if (empty($title)) {
+            $title = $field->getData('identifier');
+        }
+
         return Forge::success(
-            sprintf(
-                '%s has been saved.',
-                $field->getData('label') ?? $field->getData('identifier')
-            ),
+            sprintf('%s has been saved.', $title),
             $this
         );
     }

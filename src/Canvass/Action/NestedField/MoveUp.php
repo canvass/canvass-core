@@ -9,7 +9,13 @@ use Canvass\Forge;
 
 final class MoveUp implements Action
 {
-    public function __invoke(int $form_id, int $field_id, int $option_id)
+    /**
+     * @param int $form_id
+     * @param int $field_id
+     * @param int $option_id
+     * @return mixed
+     */
+    public function __invoke($form_id, $field_id, $option_id)
     {
         $form = \Canvass\Forge::form()->find($form_id, Forge::getOwnerId());
 
@@ -33,18 +39,14 @@ final class MoveUp implements Action
             return Forge::error($message, $this);
         }
 
+        $title = $field->getData('label');
+        if (empty($title)) {
+            $title = $field->getData('identifier');
+        }
+
         return Forge::success(
-            sprintf(
-                'Field, %s, has been moved up.',
-                $field->getData('label') ?? $field->getData('identifier')
-            ),
+            sprintf('Field, %s, has been moved up.', $title),
             $this
         );
-
-
-//            redirect()->route('form_field.edit', [$form->id, $parent->id])
-//            ->with(
-//                'success',
-//            );
     }
 }
