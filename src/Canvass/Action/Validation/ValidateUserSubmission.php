@@ -82,4 +82,10 @@ final class ValidateUserSubmission extends AbstractValidateDataAction
     {
         return $this->validation;
     }
+
+    /** @return \Canvass\Contract\FormModel */
+    public function getForm()
+    {
+        return $this->form;
+    }
 }
