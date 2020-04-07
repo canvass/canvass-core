@@ -76,7 +76,7 @@ final class Forge extends \WebAnvil\Forge
      * @param array|null $fields
      * @return array
      */
-    public static function requestData(array $fields = null)
+    public static function requestData(array $fields = null): array
     {
         try {
             $closure = self::get('request');
@@ -154,7 +154,7 @@ final class Forge extends \WebAnvil\Forge
      * @param \Exception|\Throwable
      * @return void
      */
-    public static function logThrowable($e)
+    public static function logThrowable($e): void
     {
         try {
             $logger = self::get('log');
@@ -185,7 +185,7 @@ final class Forge extends \WebAnvil\Forge
      * @param \Closure
      * @return void
      */
-    public static function setValidatorClosure(\Closure $validate)
+    public static function setValidatorClosure(\Closure $validate): void
     {
         self::set('validate', $validate);
     }
@@ -194,7 +194,7 @@ final class Forge extends \WebAnvil\Forge
      * @param \Closure
      * @return void
      */
-    public static function setValidationMapClosure(\Closure $map)
+    public static function setValidationMapClosure(\Closure $map): void
     {
         self::set('validation_map', $map);
     }
@@ -203,7 +203,7 @@ final class Forge extends \WebAnvil\Forge
      * @param \Closure
      * @return void
      */
-    public static function setLoggerClosure(\Closure $closure)
+    public static function setLoggerClosure(\Closure $closure): void
     {
         self::set('log', $closure);
     }
@@ -212,7 +212,7 @@ final class Forge extends \WebAnvil\Forge
      * @param \Closure
      * @return void
      */
-    public static function setRequestDataClosure(\Closure $request)
+    public static function setRequestDataClosure(\Closure $request): void
     {
         self::set('request', $request);
     }
@@ -221,7 +221,7 @@ final class Forge extends \WebAnvil\Forge
      * @param \Closure
      * @return void
      */
-    public static function setResponseClosure(\Closure $response)
+    public static function setResponseClosure(\Closure $response): void
     {
         self::set('response', $response);
     }
@@ -230,7 +230,7 @@ final class Forge extends \WebAnvil\Forge
      * @param \Closure
      * @return void
      */
-    public static function setSuccessClosure(\Closure $response)
+    public static function setSuccessClosure(\Closure $response): void
     {
         self::set('success', $response);
     }
@@ -239,7 +239,7 @@ final class Forge extends \WebAnvil\Forge
      * @param \Closure
      * @return void
      */
-    public static function setErrorClosure(\Closure $response)
+    public static function setErrorClosure(\Closure $response): void
     {
         self::set('error', $response);
     }

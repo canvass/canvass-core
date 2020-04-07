@@ -11,6 +11,9 @@
             "email": "puritandesigns@gmail.com"
         }
     ],
+    "require": {
+        "promo-code/web-anvil": "^0.3"
+    },
     "require-dev": {
         "roave/security-advisories": "dev-master",
         "phpunit/phpunit": "^8.3"
@@ -20,8 +23,7 @@
             "src/helpers.php"
         ],
         "psr-4": {
-            "Canvass\\": "src/Canvass/",
-            "WebAnvil\\": "src/WebAnvil/"
+            "Canvass\\": "src/Canvass/"
         }
     },
     "autoload-dev": {

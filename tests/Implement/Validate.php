@@ -2,7 +2,9 @@
 
 namespace Implement;
 
-class Validate implements \Canvass\Contract\Validate
+use WebAnvil\Interfaces\ValidatorInterface;
+
+class Validate implements \Canvass\Contract\Validate, ValidatorInterface
 {
     public function validate($data, $rules)
     {
