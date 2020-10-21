@@ -15,7 +15,7 @@ interface FormModel
      * @param mixed|null $parent_id If null, return all fields
      * @return \Canvass\Contract\FormFieldModel[]|null */
     public function findFields($parent_id = null);
-    /** @param \Canvass\Contract\int $sort
+    /** @param int $sort
      * @param int $parent_id
      * @return \Canvass\Contract\FormFieldModel|null */
     public function findFieldWithSortOf($sort, $parent_id = 0);
