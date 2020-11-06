@@ -2,7 +2,9 @@
 
 namespace Canvass\Contract;
 
-interface ValidationMap
+use WebAnvil\Interfaces\ValidationMapInterface;
+
+interface ValidationMap extends ValidationMapInterface
 {
     public function convertRulesToFormat($rules);
 }

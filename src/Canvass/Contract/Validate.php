@@ -2,7 +2,9 @@
 
 namespace Canvass\Contract;
 
-interface Validate
+use WebAnvil\Interfaces\ValidatorInterface;
+
+interface Validate extends ValidatorInterface
 {
     public function validate($data, $rules);
 }

@@ -13,6 +13,12 @@ class Store implements Action, FormAction, ActionInterface
     /** @var \Canvass\Contract\FormModel */
     private $form;
 
+    private $request_keys = [
+        'name', 'display_name', 'introduction', 'identifier', 'classes',
+        'classes', 'button_text', 'button_classes', 'confirmation_message',
+        'send_to', 'autoresponder_id'
+    ];
+
     public function __invoke($data = null)
     {
         if (null === $data) {
