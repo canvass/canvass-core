@@ -13,6 +13,12 @@ class Update implements Action, FormAction, ActionInterface
     /** @var \Canvass\Contract\FormModel */
     private $form;
 
+    private $request_keys = [
+        'name', 'display_name', 'introduction', 'identifier', 'classes',
+        'classes', 'button_text', 'button_classes', 'confirmation_message',
+        'send_to', 'autoresponder_id'
+    ];
+
     /**
      * @param \Canvass\Action\Form\int $form_id
      * @param null $data
