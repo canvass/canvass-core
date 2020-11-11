@@ -2,13 +2,13 @@
 
 namespace Implement\Model;
 
-use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 use Canvass\Support\PreparesFormData;
+use Canvass\Support\RetrievesNestedFieldData;
 
 class Form extends Model implements FormModel
 {
-    use PreparesFormData;
+    use PreparesFormData, RetrievesNestedFieldData;
 
     protected $table = 'form';
 

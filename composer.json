@@ -31,5 +31,11 @@
             "Tests\\": "tests/Tests",
             "Implement\\": "tests/Implement/"
         }
+    },
+    "config": {
+        "platform-check": false,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
     }
 }
