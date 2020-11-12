@@ -34,7 +34,7 @@ class Store implements Action, FormAction, ActionInterface
 
         $this->form = Forge::form();
 
-        $this->form->setData('owner_id', Forge::getOwnerId());
+        $this->form->setData(Forge::getOwnerIdKey(), Forge::getOwnerId());
 
         try {
             foreach ($data as $key => $value) {

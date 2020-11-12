@@ -17,6 +17,8 @@ final class Forge extends \WebAnvil\Forge
 
     private static $owner_id;
 
+    private static $owner_id_key = 'owner_id';
+
     private static $base_url_segment = '/form/';
 
     private static $field_paths = [];
@@ -104,6 +106,12 @@ final class Forge extends \WebAnvil\Forge
     public static function getOwnerId()
     {
        return self::$owner_id;
+    }
+
+    /** @return string */
+    public static function getOwnerIdKey()
+    {
+       return self::$owner_id_key;
     }
 
     /** @return string */
@@ -251,6 +259,11 @@ final class Forge extends \WebAnvil\Forge
     public static function setOwnerId($owner_id)
     {
         self::$owner_id = $owner_id;
+    }
+
+    public static function setOwnerIdKey(string $owner_id_key)
+    {
+        self::$owner_id_key = $owner_id_key;
     }
 
     /**
