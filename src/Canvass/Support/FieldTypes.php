@@ -36,6 +36,8 @@ final class FieldTypes
         'divider' => 'divider',
         'columns' => 'columns',
         'column' => 'column',
+        'email-switch' => 'select',
+        'email-option' => 'option',
     ];
 
     /**
@@ -54,7 +56,7 @@ final class FieldTypes
             'fieldset' => 'Fieldset',
             'divider' => 'Divider',
             'columns' => 'Columns',
-            'column' => 'Column'
+            'column' => 'Column',
         ];
 
         if ($just_keys) {
