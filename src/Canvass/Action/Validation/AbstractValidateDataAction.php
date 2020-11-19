@@ -25,6 +25,16 @@ abstract class AbstractValidateDataAction
         return $this->validateDataWithRules($data, $this->getValidationRules());
     }
 
+    public function getErrors(): array
+    {
+        return $this->validator->getErrors();
+    }
+
+    public function getErrorsString(): string
+    {
+        return $this->validator->getErrorsString();
+    }
+
     abstract public function getValidationRules(): array;
 
     protected function validateDataWithRules($data, $rules)
