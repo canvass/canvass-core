@@ -14,6 +14,8 @@ final class StoreField extends AbstractFieldAction
     private $validator;
     /** @var \Canvass\Contract\ValidationMap */
     private $validation_map;
+    /** @var \Canvass\Contract\Validate */
+    private $field_validator;
 
     public function __construct(
         FormModel $form,
@@ -49,22 +51,24 @@ final class StoreField extends AbstractFieldAction
         }
         unset($data['attributes']);
 
-        $validate = FieldTypes::getValidateAction($type, $general_type);
+        $this->field_validator = FieldTypes::getValidateAction($type, $general_type);
 
-        if (! $validate->validate($data)) {
+        if (! $this->field_validator->validate($data)) {
             return false;
         }
 
-        if ($validate->hasValidatableAttributes()) {
-            $validate->validateAttributes($attributes);
+        if ($this->field_validator->hasValidatableAttributes()) {
+            $this->field_validator->validateAttributes($attributes);
 
             $this->field->setData(
                 'attributes',
-                $validate->convertAttributesData($attributes)
+                $this->field_validator->convertAttributesData($attributes)
             );
         }
 
-        foreach (array_keys($validate->getDataColumnsMatchedWithRequiredBoolean()) as $key) {
+        foreach (array_keys(
+            $this->field_validator->getDataColumnsMatchedWithRequiredBoolean()
+        ) as $key) {
             if (isset($data[$key])) {
                 $this->field->setData($key, $data[$key]);
             }
@@ -93,5 +97,15 @@ final class StoreField extends AbstractFieldAction
         if (empty($this->field->getData('type'))) {
             $this->field->setData('type', $type);
         }
+    }
+
+    public function getFieldValidationErrorsString(): string
+    {
+        return $this->field_validator->getErrorsString();
+    }
+
+    public function getField(): FormFieldModel
+    {
+        return $this->field;
     }
 }
