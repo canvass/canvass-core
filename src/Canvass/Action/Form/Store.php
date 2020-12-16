@@ -8,7 +8,7 @@ use Canvass\Contract\Action\FormAction;
 use Canvass\Forge;
 use WebAnvil\Interfaces\ActionInterface;
 
-class Store implements Action, FormAction, ActionInterface
+class Store implements Action, FormAction
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;

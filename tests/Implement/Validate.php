@@ -8,4 +8,15 @@ class Validate implements \Canvass\Contract\Validate
     {
         return true;
     }
+
+    public function getErrors(): array
+    {
+        return [];
+    }
+
+    public function getErrorsString(): string
+    {
+        return '';
+    }
+
 }

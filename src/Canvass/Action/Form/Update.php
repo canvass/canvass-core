@@ -6,9 +6,8 @@ use Canvass\Action\Validation\ValidateFormData;
 use Canvass\Contract\Action\Action;
 use Canvass\Contract\Action\FormAction;
 use Canvass\Forge;
-use WebAnvil\Interfaces\ActionInterface;
 
-class Update implements Action, FormAction, ActionInterface
+class Update implements Action, FormAction
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;

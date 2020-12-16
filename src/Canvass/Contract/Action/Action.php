@@ -2,7 +2,9 @@
 
 namespace Canvass\Contract\Action;
 
-interface Action
+use WebAnvil\Interfaces\ActionInterface;
+
+interface Action extends ActionInterface
 {
 
 }

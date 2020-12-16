@@ -7,9 +7,8 @@ use Canvass\Contract\Action\Action;
 use Canvass\Contract\Action\FieldAction;
 use Canvass\Contract\Action\NestedFieldAction;
 use Canvass\Forge;
-use WebAnvil\Interfaces\ActionInterface;
 
-final class Update implements Action, FieldAction, NestedFieldAction, ActionInterface
+final class Update implements Action, FieldAction, NestedFieldAction
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;

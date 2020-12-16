@@ -6,9 +6,8 @@ use Canvass\Contract\Action\Action;
 use Canvass\Contract\Action\FormAction;
 use Canvass\Exception\DeleteFailedException;
 use Canvass\Forge;
-use WebAnvil\Interfaces\ActionInterface;
 
-class Destroy implements Action, FormAction, ActionInterface
+class Destroy implements Action, FormAction
 {
     /** @var \Canvass\Contract\FormModel */
     private $form;
