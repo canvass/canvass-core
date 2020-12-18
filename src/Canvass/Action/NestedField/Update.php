@@ -40,7 +40,6 @@ final class Update implements Action, FieldAction, NestedFieldAction
             Forge::validationMap()
         );
 
-        $updated = true;
         try {
             $updated = $update->run($data, $field->getData('type'));
         } catch (\Throwable $e) {

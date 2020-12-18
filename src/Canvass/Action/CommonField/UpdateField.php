@@ -6,8 +6,8 @@ use Canvass\Contract\FormFieldModel;
 use Canvass\Contract\FormModel;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
+use Canvass\Exception\ValidationException;
 use Canvass\Support\FieldTypes;
-use Illuminate\Validation\ValidationException;
 
 final class UpdateField extends AbstractFieldAction
 {
@@ -37,6 +37,7 @@ final class UpdateField extends AbstractFieldAction
      * @return bool
      * @throws \Canvass\Exception\InvalidValidationData
      * @throws \WebAnvil\ForgeClosureNotFoundException
+     * @throws \Canvass\Exception\ValidationException
      */
     public function run(
         $data,
@@ -52,7 +53,8 @@ final class UpdateField extends AbstractFieldAction
 
         if (! $validate->validate($data)) {
             throw new ValidationException(
-                'Failed to validate field for update'
+                'Failed to validate field for update: ' .
+                    $validate->getErrorsString()
             );
         }
 
