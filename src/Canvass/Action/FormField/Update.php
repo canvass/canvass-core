@@ -39,7 +39,12 @@ final class Update implements Action, FieldAction
         }
 
         if (! $updated) {
-            return Forge::error('Could not update field.', $this);
+            $message = 'Could not update field';
+            if (isset($e)) {
+                $message .= ' ' . $e->getMessage();
+            }
+
+            return Forge::error($message, $this);
         }
 
         return Forge::success(

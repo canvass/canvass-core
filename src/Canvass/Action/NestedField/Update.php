@@ -40,6 +40,7 @@ final class Update implements Action, FieldAction, NestedFieldAction
             Forge::validationMap()
         );
 
+        $updated = true;
         try {
             $updated = $update->run($data, $field->getData('type'));
         } catch (\Throwable $e) {
@@ -49,7 +50,12 @@ final class Update implements Action, FieldAction, NestedFieldAction
         }
 
         if (! $updated) {
-            return Forge::error('Could not update field option.', $this);
+            $message = 'Could not update field option';
+            if (isset($e)) {
+                $message .= ': ' . $e->getMessage();
+            }
+
+            return Forge::error($message, $this);
         }
 
         return Forge::success(

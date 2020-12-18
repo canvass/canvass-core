@@ -7,6 +7,7 @@ use Canvass\Contract\FormModel;
 use Canvass\Contract\Validate;
 use Canvass\Contract\ValidationMap;
 use Canvass\Support\FieldTypes;
+use Illuminate\Validation\ValidationException;
 
 final class UpdateField extends AbstractFieldAction
 {
@@ -50,7 +51,9 @@ final class UpdateField extends AbstractFieldAction
         $validate = FieldTypes::getValidateAction($type);
 
         if (! $validate->validate($data)) {
-            return false;
+            throw new ValidationException(
+                'Failed to validate field for update'
+            );
         }
 
         foreach (array_keys($validate->getDataColumnsMatchedWithRequiredBoolean()) as $key) {
